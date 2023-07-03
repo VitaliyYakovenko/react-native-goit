@@ -16,12 +16,23 @@ const styles = StyleSheet.create({
         fontWeight: 500,
     },
     whiteBgBox: {
-        position:"relative",
+        position: "relative",
         borderRadius: 25,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
         backgroundColor: "#fff",
-    }, 
+    },
+    activeKeyboard: {
+        top: 180,
+    },
+    validateText: {
+        position: "absolute",
+        fontWeight: 600,
+        color: "red",
+        top: 78,
+        zIndex: 2,
+        right: 58,
+    },
      input: {
         marginLeft: "auto",
         marginRight: "auto",
@@ -57,8 +68,12 @@ const styles = StyleSheet.create({
         top: -18,
         color: "#1B4371",
     },
-
-     btnLogIn: {
+    inputFocused: {
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "#FF6C00",
+    },
+    btnLogIn: {
         marginLeft: "auto",
         marginRight: "auto",  
 

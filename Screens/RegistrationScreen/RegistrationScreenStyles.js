@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 
  const styles = StyleSheet.create({
-    backgroundImage: {
+     backgroundImage: {
        flex: 1,
        resizeMode: "stretch",
        justifyContent: "flex-end",
@@ -29,8 +29,17 @@ import { StyleSheet } from "react-native";
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
         backgroundColor: "#fff",
-    }, 
-
+    },
+      activeKeyboard: {
+        top: 180,
+    },
+    validateText: {
+        position: "absolute",
+        fontWeight: 600,
+        color: "red",
+        top: 124,
+        right: 58,
+    },
     register: {
        marginLeft: "auto",
        marginRight: "auto",
@@ -41,6 +50,11 @@ import { StyleSheet } from "react-native";
        letterSpacing: 0.3,
        fontWeight: 900,
        marginBottom: 33,
+    },
+    inputFocused: {
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "#FF6C00",
     },
     input: {
         marginLeft: "auto",

@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 0,
         backgroundColor: "#fff",
     },
-    activeKeyboard: {
-        top: 180,
-    },
+    // activeKeyboard: {
+    //     top: 180,
+    // },
     validateText: {
         position: "absolute",
         fontWeight: 600,

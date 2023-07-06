@@ -11,8 +11,11 @@ import styles from './LoginScreenStyles';
 
 
 
-export default function LoginScreen({ isKeyboardVisible }) {
+export default function LoginScreen({ navigation }) {
   
+ 
+
+   const isKeyboardVisible = true;
    const [email, setEmail] = useState(""); 
    const [password, setPassword] = useState("");
    const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +49,7 @@ export default function LoginScreen({ isKeyboardVisible }) {
             setValidateInput(true);
             return
         }
-
+        navigation.navigate("Home") 
         console.log(
         `Email - ${email}, 
         Password - ${password}`);
@@ -138,7 +141,9 @@ export default function LoginScreen({ isKeyboardVisible }) {
         </TouchableHighlight>
         <Text style={[{ fontFamily: "Roboto-Medium" }, styles.textLink]}>
         Немає акаунту?
-        <Text style={[{ fontFamily: "Roboto-Medium" }, styles.textRegister]}
+        <Text
+        onPress={() => navigation.navigate("Registration")}
+        style={[{ fontFamily: "Roboto-Medium" }, styles.textRegister]}
         > Зареєструватися</Text>
         </Text>
 

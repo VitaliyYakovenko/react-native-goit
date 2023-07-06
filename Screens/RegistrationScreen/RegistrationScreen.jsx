@@ -11,7 +11,7 @@ import { useState } from 'react';
 import styles from "./RegistrationScreenStyles";
 
 
-export default function RegistrationScreen({isKeyboardVisible}) {
+export default function RegistrationScreen({navigation}) {
    const [login, setLogin] = useState("");
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
@@ -56,7 +56,9 @@ export default function RegistrationScreen({isKeyboardVisible}) {
         if (login === "" || email === "" || password === "") {
             setValidateInput(true);
             return
-        }
+      }
+      
+        navigation.navigate("PostsScreen");
         console.log(
         `Login - ${login}, 
         Email - ${email}, 
@@ -75,14 +77,10 @@ export default function RegistrationScreen({isKeyboardVisible}) {
 
     return (
         <>
-    
         <ImageBackground
         style={styles.backgroundImage}    
         source={require('../../images/photo-bg.png')}>  
-        <View style={[
-            styles.whiteBgBox,
-            isKeyboardVisible ? styles.activeKeyboard : null
-        ]}>
+        <View style={styles.whiteBgBox}>
 
                  
         <Image
@@ -173,14 +171,16 @@ export default function RegistrationScreen({isKeyboardVisible}) {
         Зареєстуватися
         </Text>        
         </TouchableHighlight>
-        <Text style={[{ fontFamily: "Roboto-Medium" }, styles.textLink]}>
+        <Text
+        onPress={() => navigation.navigate("LoginScreen")}                
+        style={[{ fontFamily: "Roboto-Medium" }, styles.textLink]}>
         Вже є акаунт? Увійти
         </Text>
                     
         </View>         
         </ImageBackground>
         </>    
-    )
+    ) 
 };
 
 

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from 'expo-font';
@@ -11,16 +11,19 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
+
+import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from './Screens/LoginScreen/LoginScreen';
 import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
 import Home from "./Screens/Home/Home";
 import PostsScreen from './Screens/PostsScreen/PostsScreen';
 import CreatePostsScreen from './Screens/CreatePostsScreen/CreatePostsScreen';
 import ProfileScreen from "./Screens/ProfileScreen/ProfileScreen";
-import { createStackNavigator } from "@react-navigation/stack";
+
 
 
 const MainStack = createStackNavigator();
+
 
 
 export default function App() {
@@ -74,19 +77,19 @@ export default function App() {
               ...styles.navEl
             }}}
                 component={RegistrationScreen} />
-             
-         <MainStack.Screen name="Home" options={{
+              
+       <MainStack.Screen name="Home" options={{
           headerStyle: {
               ...styles.navEl
             }}}
           component={Home}/>
-                  
-          
+            
+           
          <MainStack.Screen name="PostsScreen" options={{
           headerStyle: {
               ...styles.navEl
             }}}
-          component={PostsScreen}/>
+          component={PostsScreen}/> 
                   
 
           <MainStack.Screen name="CreatePostsScreen" options={{
@@ -99,16 +102,15 @@ export default function App() {
           headerStyle: {
               ...styles.navEl
             }}}
-          component={ProfileScreen}/>    
+          component={ProfileScreen}/>   
 
      
       </MainStack.Navigator> 
-      
-      
+
       </View>
     </NavigationContainer>
-        
-      </KeyboardAvoidingView>
+         
+    </KeyboardAvoidingView>
       
     </TouchableWithoutFeedback>
   

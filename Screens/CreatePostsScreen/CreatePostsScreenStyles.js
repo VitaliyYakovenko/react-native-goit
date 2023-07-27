@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 
 
 const styles = StyleSheet.create({
-    container: {
+    createPostsScreen: {
         flex: 1,
     },
-    navBar: {
+    navBarPosts: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "space-between",
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
         display: "flex",
         marginLeft: "auto",
         marginRight: "auto",
+        paddingBottom: 140,
     }
 });
 

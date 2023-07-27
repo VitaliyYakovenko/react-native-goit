@@ -1,29 +1,24 @@
-import {
-  View,
-  Text,
-  Image,
-  Pressable  
-} from "react-native";
+import { View, Text, Image } from "react-native";
 import SvgUri from "react-native-svg-uri";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
+
 import Home from "../Home/Home";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
+import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import styles from "./PostsScreenStyles";
-
 
 const Tab = createBottomTabNavigator();
 
 export default function PostsScreen({ navigation }) {
 
   return (
-    <View style={styles.container}>
-
+    <View style={styles.postsScreen}>
+      
       <View style={styles.navBar}>
-     
-      <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>
+       <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>
         Публікації
       </Text>
+   
       
       <SvgUri style={styles.icon}
         width="24"
@@ -31,8 +26,7 @@ export default function PostsScreen({ navigation }) {
         source={require('../../assets/icons/log-out.svg')}
         />
       </View>
-      
-
+     
       <View style={styles.userBlock}>
 
       <Image
@@ -46,25 +40,9 @@ export default function PostsScreen({ navigation }) {
       </View>
 
       </View>
-      <View style={styles.navMenu}>
-        <Pressable  onPress={() => navigation.navigate("Home")}>
-        <SvgUri source={require("../../assets/icons/menu-icon.svg")} />
-        </Pressable>  
-        
-        <Pressable
-        onPress={() => navigation.navigate("CreatePostsScreen")}
-        >
-        <Image
-          style={styles.mainBtn}        
-            source={require("../../images/main-btn.png")} />
-        </Pressable>  
-      
-        <Pressable  onPress={() => navigation.navigate("ProfileScreen")}>
-        <SvgUri source={require("../../assets/icons/user-icon.svg")} />
-        </Pressable>
-      </View>
       </View>
   );
 };
+
 
 

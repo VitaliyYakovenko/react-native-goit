@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 
 
  const styles = StyleSheet.create({
-  container: {
+   postsScreen: {
     flex: 1,
     justifyContent:"space-between",
-    backgroundColor:"white",
+    backgroundColor:"#FFF",
   },
   navBar: {
     flexDirection: 'row',
@@ -62,7 +62,7 @@ import { StyleSheet } from "react-native";
   mainBtn: {
     marginLeft: 38,
     marginRight: 38,
-  }
+   }
 });
 
 

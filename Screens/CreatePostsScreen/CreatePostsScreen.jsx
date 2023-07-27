@@ -13,9 +13,9 @@ export default function CreatePostsScreen() {
 
 
     return (
-        <View style={styles.container}>
+        <View style={styles.createPostsScreen}>
 
-        <View style={styles.navBar}>  
+        <View style={styles.navBarPosts}>  
         <SvgUri
         width="24" height="24"
         style={styles.icon}            

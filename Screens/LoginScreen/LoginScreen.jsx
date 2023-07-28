@@ -49,7 +49,7 @@ export default function LoginScreen({ navigation }) {
             setValidateInput(true);
             return
         }
-        navigation.navigate("Home") 
+        navigation.navigate("PostsScreen") 
         console.log(
         `Email - ${email}, 
         Password - ${password}`);

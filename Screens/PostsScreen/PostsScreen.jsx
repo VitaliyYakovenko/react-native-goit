@@ -1,8 +1,6 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image ,TouchableOpacity } from "react-native";
 import SvgUri from "react-native-svg-uri";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import Home from "../Home/Home";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
 import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import styles from "./PostsScreenStyles";
@@ -10,6 +8,11 @@ import styles from "./PostsScreenStyles";
 const Tab = createBottomTabNavigator();
 
 export default function PostsScreen({ navigation }) {
+ 
+  const onLogOut = () => {
+     navigation.navigate("LoginScreen")
+   }
+   
 
   return (
     <View style={styles.postsScreen}>
@@ -18,15 +21,20 @@ export default function PostsScreen({ navigation }) {
        <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>
         Публікації
       </Text>
-   
       
-      <SvgUri style={styles.icon}
-        width="24"
-        height="24"
-        source={require('../../assets/icons/log-out.svg')}
-        />
+
+      <TouchableOpacity
+          style={styles.iconLogOut}
+          onPress={onLogOut}>
+           <SvgUri 
+             width="24"
+             height="24"
+             source={require('../../assets/icons/log-out.svg')}
+      />
+      </TouchableOpacity>
+
+        
       </View>
-     
       <View style={styles.userBlock}>
 
       <Image
@@ -40,6 +48,27 @@ export default function PostsScreen({ navigation }) {
       </View>
 
       </View>
+
+      <View style={styles.navMenu}>
+        
+            <SvgUri 
+             width="24"
+             height="24"
+             source={require('../../assets/icons/menu-icon.svg')}/>
+
+            <Image
+            width="24"
+            height="24"
+            style={styles.mainBtn}  
+            source={require("../../images/center-btn.png")}/>
+
+            <SvgUri 
+             width="24"
+             height="24"
+             source={require('../../assets/icons/user-icon.svg')}/>  
+      
+      </View>  
+
       </View>
   );
 };

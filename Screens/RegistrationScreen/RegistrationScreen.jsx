@@ -58,7 +58,7 @@ export default function RegistrationScreen({navigation}) {
             return
       }
       
-        navigation.navigate("Home");
+        navigation.navigate("PostsScreen");
         console.log(
         `Login - ${login}, 
         Email - ${email}, 

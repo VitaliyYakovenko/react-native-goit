@@ -24,12 +24,16 @@ import { StyleSheet } from "react-native";
     right: 0,
     fontSize: 17,
     fontWeight: 500,
-  },
-  icon: {
+   },
+  
+  
+
+  iconLogOut: {
     marginLeft: 'auto',
-    
     marginRight:16,
   },
+  
+
   userBlock: {
     position: "absolute",
     left: 16,

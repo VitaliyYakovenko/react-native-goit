@@ -11,23 +11,20 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
-
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from './Screens/LoginScreen/LoginScreen';
 import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
-import Home from "./Screens/Home/Home";
 import PostsScreen from './Screens/PostsScreen/PostsScreen';
 import CreatePostsScreen from './Screens/CreatePostsScreen/CreatePostsScreen';
 import ProfileScreen from "./Screens/ProfileScreen/ProfileScreen";
 
 
+const RootStack = createStackNavigator();
 
-const MainStack = createStackNavigator();
 
 
 
 export default function App() {
-
 
    useEffect(() => {
     async function loadFonts() {
@@ -45,7 +42,6 @@ export default function App() {
      'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
      'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
   });
-
 
   if (!fontsLoaded) {
     return null;
@@ -65,47 +61,32 @@ export default function App() {
        
     <StatusBar style="auto" />
 
-      <MainStack.Navigator initialRouteName={LoginScreen}>
-          <MainStack.Screen name="LoginScreen" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+        <RootStack.Navigator initialRouteName={LoginScreen}>
+              
+              <RootStack.Screen name="LoginScreen"
+          options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}
           component={LoginScreen}/>
               
-          <MainStack.Screen name="Registration" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
-                component={RegistrationScreen} />
-              
-       <MainStack.Screen name="Home" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
-          component={Home}/>
-            
+              <RootStack.Screen name="Registration"
+          options={{headerStyle: {...styles.navEl}, headerLeft: false}}
+          component={RegistrationScreen} />
+ 
            
-         <MainStack.Screen name="PostsScreen" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+              <RootStack.Screen name="PostsScreen"
+          options={{headerStyle: {...styles.navEl}, headerLeft: false}}
           component={PostsScreen}/> 
                   
 
-          <MainStack.Screen name="CreatePostsScreen" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+              <RootStack.Screen name="CreatePostsScreen"
+          options={{headerStyle: {...styles.navEl}, headerLeft: false}}
           component={CreatePostsScreen}/>
  
-          <MainStack.Screen name="ProfileScreen" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+              <RootStack.Screen name="ProfileScreen"
+          options={{headerStyle: {...styles.navEl}, headerLeft: false}}
           component={ProfileScreen}/>   
 
      
-      </MainStack.Navigator> 
+      </RootStack.Navigator> 
 
       </View>
     </NavigationContainer>

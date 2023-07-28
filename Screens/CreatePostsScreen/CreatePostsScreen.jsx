@@ -2,30 +2,40 @@ import {
     View,
     Text,
     Image,
-    TouchableHighlight
+    TouchableHighlight,
+    TouchableOpacity
 } from "react-native";
 import SvgUri from "react-native-svg-uri";
 import styles from "./CreatePostsScreenStyles";
 
 
-export default function CreatePostsScreen() {
- 
-
+export default function CreatePostsScreen({ navigation }) {
+    
+    const onNavigatePostsScreen = () => {
+        console.log("hello")
+        navigation.goBack();
+    };
+   
 
     return (
         <View style={styles.createPostsScreen}>
 
-        <View style={styles.navBarPosts}>  
-        <SvgUri
-        width="24" height="24"
-        style={styles.icon}            
-        source={require("../../assets/icons/arrow-left.svg")}    
-        />
-        <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>
-        CreatePostsScreen
-        </Text>
-        </View>  
+          <TouchableOpacity
+                style={styles.icon}
+                onPress={onNavigatePostsScreen}    
+               >   
+               <SvgUri
+               width="24" height="24"         
+               source={require("../../assets/icons/arrow-left.svg")}/>
+               </TouchableOpacity>   
+             
 
+        <View style={styles.navBarPosts}>                
+        <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>
+        Створити публікацію
+        </Text>    
+        </View>  
+      
         <View style={styles.postBlock}> 
         <Image
         style={styles.imagePost}        

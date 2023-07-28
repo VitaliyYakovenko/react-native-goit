@@ -1,8 +1,6 @@
 import { View, Text, Image ,TouchableOpacity } from "react-native";
 import SvgUri from "react-native-svg-uri";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ProfileScreen from "../ProfileScreen/ProfileScreen";
-import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import styles from "./PostsScreenStyles";
 
 const Tab = createBottomTabNavigator();
@@ -11,8 +9,20 @@ export default function PostsScreen({ navigation }) {
  
   const onLogOut = () => {
      navigation.navigate("LoginScreen")
-   }
-   
+  }
+  
+  const onNavigatePostsScreen = () => {
+      navigation.navigate("PostsScreen")
+  };
+    
+  const onNavigateCreatePostsScreen = () => {
+       navigation.navigate("CreatePostsScreen")
+  }; 
+
+  const onNavigateProfileScreen = () => {
+       navigation.navigate("ProfileScreen")
+  }
+
 
   return (
     <View style={styles.postsScreen}>
@@ -50,22 +60,28 @@ export default function PostsScreen({ navigation }) {
       </View>
 
       <View style={styles.navMenu}>
-        
+          
+            <TouchableOpacity onPress={onNavigatePostsScreen}>
             <SvgUri 
              width="24"
              height="24"
              source={require('../../assets/icons/menu-icon.svg')}/>
-
+            </TouchableOpacity>
+        
+            <TouchableOpacity onPress={onNavigateCreatePostsScreen}>
             <Image
             width="24"
             height="24"
             style={styles.mainBtn}  
-            source={require("../../images/center-btn.png")}/>
+            source={require("../../images/center-btn.png")} />
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={onNavigateProfileScreen}>
             <SvgUri 
              width="24"
              height="24"
-             source={require('../../assets/icons/user-icon.svg')}/>  
+            source={require('../../assets/icons/user-icon.svg')} />  
+            </TouchableOpacity>
       
       </View>  
 

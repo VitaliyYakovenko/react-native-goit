@@ -72,36 +72,23 @@ export default function App() {
             }}}
           component={LoginScreen}/>
               
-          <MainStack.Screen name="Registration" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
-                component={RegistrationScreen} />
+        <MainStack.Screen name="Registration" 
+           options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}      
+            component={RegistrationScreen} />
               
-       <MainStack.Screen name="Home" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+        <MainStack.Screen name="Home" 
+         options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}        
           component={Home}/>
             
            
-         <MainStack.Screen name="PostsScreen" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+        <MainStack.Screen name="PostsScreen"      
           component={PostsScreen}/> 
                   
 
-          <MainStack.Screen name="CreatePostsScreen" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+          <MainStack.Screen name="CreatePostsScreen"
           component={CreatePostsScreen}/>
  
-          <MainStack.Screen name="ProfileScreen" options={{
-          headerStyle: {
-              ...styles.navEl
-            }}}
+          <MainStack.Screen name="ProfileScreen" 
           component={ProfileScreen}/>   
 
      

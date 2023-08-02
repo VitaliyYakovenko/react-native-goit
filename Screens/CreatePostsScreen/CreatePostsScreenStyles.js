@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     navBarPosts: {
+        height: 60,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "space-between",
@@ -26,6 +27,8 @@ const styles = StyleSheet.create({
         color: "#212121",
     },
     icon: {
+        position: "absolute",
+        top: -66,
         marginRight: 'auto',
         marginLeft: 16,
     },

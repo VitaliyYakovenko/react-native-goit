@@ -1,15 +1,16 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image , TouchableOpacity } from "react-native";
 import SvgUri from "react-native-svg-uri";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import Home from "../Home/Home";
-import ProfileScreen from "../ProfileScreen/ProfileScreen";
-import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import styles from "./PostsScreenStyles";
 
 const Tab = createBottomTabNavigator();
 
 export default function PostsScreen({ navigation }) {
+ 
+  const onLogOut = () => {
+    navigation.navigate("LoginScreen"); 
+  };
+
 
   return (
     <View style={styles.postsScreen}>
@@ -18,13 +19,15 @@ export default function PostsScreen({ navigation }) {
        <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>
         Публікації
       </Text>
-   
-      
-      <SvgUri style={styles.icon}
+    
+      <TouchableOpacity onPress={onLogOut} style={styles.icon}>
+      <SvgUri 
         width="24"
         height="24"
         source={require('../../assets/icons/log-out.svg')}
-        />
+      />
+      </TouchableOpacity>
+
       </View>
      
       <View style={styles.userBlock}>

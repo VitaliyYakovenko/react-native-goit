@@ -1,24 +1,33 @@
+import { useState} from "react";
 import {
     View,
     Text,
     Image,
     TouchableHighlight,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from "react-native";
+import { Camera } from "expo-camera";
 import SvgUri from "react-native-svg-uri";
 import styles from "./CreatePostsScreenStyles";
 
 
 export default function CreatePostsScreen({ navigation }) {
- 
-    const onGoBack = () => {
-        
-        navigation.navigate("PostsScreen"); 
-    };
+  const [camera, setCamera] = useState(null);
+  const [photo, setPhoto] = useState("");
+  const type = Camera.Constants.Type.back;
 
-    return (
-    
-    
+  const takePhoto = async () => {
+    const photo = await camera.takePictureAsync();
+    setPhoto(photo.uri);
+  };   
+
+  const onGoBack = () => {  
+        navigation.navigate("PostsScreen"); 
+  };
+
+
+    return (  
         <View style={styles.createPostsScreen}>
 
          <View style={styles.navBarPosts}>    
@@ -34,14 +43,22 @@ export default function CreatePostsScreen({ navigation }) {
            source={require("../../assets/icons/arrow-left.svg")}/>
         </TouchableOpacity>
                 
-            
+         
         <View style={styles.postBlock}> 
-        <Image
-        style={styles.imagePost}        
-        source={require("../../images/post-image.png")} />
+        
+        {photo && <Image style={styles.backgroundImage} source={{uri: photo}} />}
+          
+         <Camera
+            style={styles.imagePost}
+            type={type}
+            ref={setCamera}
+          />        
+          
+        <TouchableOpacity
+        onPress={takePhoto}
+        style={styles.ellipseIcon}>         
         <SvgUri
-        width="60" height="60"
-        style={styles.ellipseIcon}            
+        width="60" height="60"          
         source={require("../../assets/icons/ellipse.svg")}        
         /> 
            
@@ -50,8 +67,10 @@ export default function CreatePostsScreen({ navigation }) {
         style={styles.cameraIcon}
         source={require("../../images/camera.png")}            
         />
+        </TouchableOpacity>                
         </View>
-            
+        
+    
         <Text
         style={[{ fontFamily: "Roboto-Medium" }, styles.editPhoto]}>
         Редагувати фото</Text>        
@@ -83,5 +102,4 @@ export default function CreatePostsScreen({ navigation }) {
         </View>
     </View>)
 };
-
 

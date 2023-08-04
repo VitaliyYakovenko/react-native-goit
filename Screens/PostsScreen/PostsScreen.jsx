@@ -11,6 +11,17 @@ export default function PostsScreen({ navigation }) {
     navigation.navigate("LoginScreen"); 
   };
 
+  const onNavigatePostsScreen = () => {
+      navigation.navigate("PostsScreen")
+  };
+    
+  const onNavigateCreatePostsScreen = () => {
+       navigation.navigate("CreatePostsScreen")
+  }; 
+
+  const onNavigateProfileScreen = () => {
+       navigation.navigate("ProfileScreen")
+  }
 
   return (
     <View style={styles.postsScreen}>
@@ -41,8 +52,38 @@ export default function PostsScreen({ navigation }) {
       <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.name]]}>Natali Romanova</Text>
       <Text style={[[{ fontFamily: "Roboto-Medium" }, styles.email]]}>email@example.com</Text>
       </View>
-
       </View>
+
+        <View style={styles.navMenu}>
+          
+            <TouchableOpacity onPress={onNavigatePostsScreen}>
+            <SvgUri 
+             width="24"
+             height="24"
+             source={require('../../assets/icons/menu-icon.svg')}/>
+            </TouchableOpacity>
+        
+           <TouchableOpacity onPress={onNavigateCreatePostsScreen}>
+            <View style={styles.mainBtn}>        
+            <SvgUri
+            style={styles.iconPlus}  
+            width="50"
+            height="50" 
+            source={require("../../assets/icons/plus-icon.svg")} />
+            </View>  
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={onNavigateProfileScreen}>
+            <SvgUri 
+             width="24"
+             height="24"
+            source={require('../../assets/icons/user-icon.svg')} />  
+            </TouchableOpacity>
+      
+      </View>  
+
+      
+
       </View>
   );
 };

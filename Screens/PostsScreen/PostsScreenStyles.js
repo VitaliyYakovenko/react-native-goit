@@ -59,9 +59,20 @@ import { StyleSheet } from "react-native";
     paddingTop: 9,
    },
 
-  mainBtn: {
+   mainBtn: {
+    position:"relative",
     marginLeft: 38,
     marginRight: 38,
+    width: 70,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: "#FF6C00", 
+   },
+   iconPlus: {
+     position: "absolute",
+     left: 10,
+     top:-5,
+     color: "white",
    }
 });
 

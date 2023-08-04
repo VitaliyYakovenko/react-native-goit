@@ -38,17 +38,33 @@ const posts = [
 export default function ProfileScreen({navigation}) {
     
 
+    const onNavigatePostsScreen = () => {
+      navigation.navigate("PostsScreen")
+   };
+    
+   const onNavigateCreatePostsScreen = () => {
+       navigation.navigate("CreatePostsScreen")
+   }; 
+
+   const onNavigateProfileScreen = () => {
+       navigation.navigate("ProfileScreen")
+   }
+ 
     const onLogOut = () => {
     navigation.navigate("LoginScreen"); 
     };
-
+  
+    const onHandleScroll = (e) => {
+     const offsetY = e.nativeEvent.contentOffset.y;
+    };
 
     return (
-        <ScrollView style={styles.scrollViewContent}>
+        <>
+    <ScrollView onScroll={onHandleScroll} style={styles.scrollViewContent}>
         <ImageBackground
             style={styles.backgroundImage}
             source={require("../../images/photo-bg.png")}>
-            
+        
     <View style={styles.whiteBgBox}>
   
         <View style={styles.userBlock}> 
@@ -70,9 +86,10 @@ export default function ProfileScreen({navigation}) {
                     source={require('../../assets/icons/log-out.svg')}/>
         </TouchableOpacity>            
         </View>
-        <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.userName]]}>Natali Romanova</Text>
 
-            
+
+        <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.userName]]}>Natali Romanova</Text>
+    
        <ScrollView styles={styles.scrollViewContent}>
         {posts.map((post) => (
           <View style={styles.postContent} key={post.img}>
@@ -99,16 +116,46 @@ export default function ProfileScreen({navigation}) {
             <Text>{post.country}</Text>
             </View> 
 
-            </View>        
-                
+            </View>                 
           </View>
         ))}
-        </ScrollView> 
-                
-    </View>
-   
-        </ImageBackground>
-    </ScrollView>)
+                    
+        </ScrollView>       
+        </View>
+    </ImageBackground>
+     <View style={styles.navMenu}>
+            
+        
+            <TouchableOpacity onPress={onNavigatePostsScreen}>
+            <SvgUri 
+             width="24"
+             height="24"
+             source={require('../../assets/icons/menu-icon.svg')}/>
+            </TouchableOpacity>
+        
+            <TouchableOpacity onPress={onNavigateCreatePostsScreen}>
+            <View style={styles.mainBtn}>        
+            <SvgUri
+            style={styles.iconUser}  
+            width="24"
+            height="24" 
+            source={require('../../assets/icons/user-icon.svg')} />
+            </View>  
+            </TouchableOpacity>
+            
+
+            <TouchableOpacity onPress={onNavigateProfileScreen}>
+            <SvgUri 
+             width="40"
+             height="40"
+            source={require('../../assets/icons/plus-icon.svg')} />  
+            </TouchableOpacity>
+         
+                    
+      </View>              
+        </ScrollView>  
+       </>     
+    )
 };
 
 

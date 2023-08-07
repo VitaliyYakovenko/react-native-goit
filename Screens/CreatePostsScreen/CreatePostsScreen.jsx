@@ -1,11 +1,11 @@
-import { useState} from "react";
+import { useState , useEffect} from "react";
 import {
     View,
     Text,
     Image,
     TouchableHighlight,
     TouchableOpacity,
-    Alert
+    TextInput,
 } from "react-native";
 import { Camera } from "expo-camera";
 import SvgUri from "react-native-svg-uri";
@@ -15,17 +15,56 @@ import styles from "./CreatePostsScreenStyles";
 export default function CreatePostsScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const type = Camera.Constants.Type.back;
+
+  useEffect(() => {
+    
+    if (photo !== "" && name !== "" && location !== "") {
+     
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [photo, name, location]);
+
+
 
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
+    console.log(photo);
   };   
+
 
   const onGoBack = () => {  
         navigation.navigate("PostsScreen"); 
   };
 
+  const onEditPhoto = () => {
+    setPhoto("");
+  };
+
+  const onPublickPost = () => {
+    setPhoto("");
+    setLocation("");
+    setName("");
+    navigation.navigate("PostsScreen", {
+      photo: photo,
+      name: name,
+      location: location,
+    }); 
+  };
+
+
+  const onDeletePost = () => {
+    setPhoto("");
+    setLocation("");
+    setName("");
+  };
+ 
 
     return (  
         <View style={styles.createPostsScreen}>
@@ -70,35 +109,60 @@ export default function CreatePostsScreen({ navigation }) {
         </TouchableOpacity>                
         </View>
         
-    
+        <TouchableOpacity onPress={onEditPhoto}>
         <Text
         style={[{ fontFamily: "Roboto-Medium" }, styles.editPhoto]}>
         Редагувати фото</Text>        
-                
-        <Text
-        style={[{ fontFamily: "Roboto-Bold" }, styles.nameLocation]}>
-        Ліс</Text>
+        </TouchableOpacity>
+        
+        <View style={styles.nameLocationInput}>
+        <TextInput
+            placeholder="Назва..."
+            placeholderTextColor="#BDBDBD"
+            fontSize={16} 
+            fontFamily="Roboto-Light"
+            value={name}
+            onChangeText={setName}
+        />
+        </View>
+     
 
         <View style={styles.addressBlock}>
-        <SvgUri
+        <SvgUri style={styles.iconLocation}
         width="24" height="24"
-        source={require("../../assets/icons/map-icon.svg")} />        
-        <Text style={[{ fontFamily: "Roboto-Medium" }, styles.address]}>
-        Ivano-Frankivs'k Region, Ukraine
-        </Text>
+        source={require("../../assets/icons/map-icon.svg")} />
+        <TextInput
+            placeholder="Назва..."
+            placeholderTextColor="#BDBDBD"
+            fontSize={16} 
+            fontFamily="Roboto-Light"
+            value={location}
+            onChangeText={setLocation}
+            />  
         </View> 
             
         <TouchableHighlight
-        style={styles.publickBtn}>
-        <Text style={[{ fontFamily: "Roboto-Bold" }, styles.btnText]}>
+        disabled={disabled}
+         style={[
+          styles.publickBtn,
+           disabled ? null : styles.activePublickBtn,
+          ]}
+        onPress={onPublickPost}  
+        >
+          <Text  style={[{ fontFamily: "Roboto-Bold" },
+                 styles.btnText,
+                   disabled ? null : styles.activeBtnText
+                  ]}>
         Опубліковати</Text>            
         </TouchableHighlight>
 
-       <View style={styles.deleteBar}>
+        <View style={styles.deleteBar}>
+        <TouchableHighlight onPress={onDeletePost}>
         <Image      
         width="70" height="40"
         source={require("../../images/delete-btn.png")}     
-        /> 
+          /> 
+        </TouchableHighlight>
         </View>
     </View>)
 };

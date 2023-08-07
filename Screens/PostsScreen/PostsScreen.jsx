@@ -1,12 +1,29 @@
-import { View, Text, Image , TouchableOpacity } from "react-native";
+import { useState , useEffect} from "react";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import SvgUri from "react-native-svg-uri";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from "./PostsScreenStyles";
 
-const Tab = createBottomTabNavigator();
 
-export default function PostsScreen({ navigation }) {
- 
+
+export default function PostsScreen({ navigation, route }) {
+  const [posts, setPosts] = useState([]);
+  const [isShowPosts, setIsShowPosts] = useState(false);
+   
+  useEffect(() => {
+    const { photo, name, location } = route.params || {};
+    console.log(photo);
+    if (photo && name && location) {
+     
+      const data = { photo, name, location };
+      
+      console.log(data);
+      setPosts((prev) => [...prev, data]);
+      setIsShowPosts(true);
+    }
+  
+   }, [route]);
+   
+  
   const onLogOut = () => {
     navigation.navigate("LoginScreen"); 
   };
@@ -23,7 +40,13 @@ export default function PostsScreen({ navigation }) {
        navigation.navigate("ProfileScreen")
   }
 
+  const onHandleScroll = (e) => {
+     const offsetY = e.nativeEvent.contentOffset.y;
+    };
+
+
   return (
+    <ScrollView onScroll={onHandleScroll}>
     <View style={styles.postsScreen}>
       
       <View style={styles.navBar}>
@@ -54,6 +77,39 @@ export default function PostsScreen({ navigation }) {
       </View>
       </View>
 
+    {isShowPosts && posts.map(post => (
+        <ScrollView onScroll={onHandleScroll} key={post.photo} style={styles.postBar}>
+        <View style={styles.posts}>
+        <Image style={styles.imgPost} source={{uri: post.photo}}/>
+          <Text style={styles.postName}>{post.name}</Text>
+          <View style={styles.postInformBar}>
+
+          <View style={styles.postCommentsBar}>
+            <SvgUri
+             width="24"
+             height="24"
+             source={require("../../assets/icons/no-commetns-icon.svg")}  
+            />
+            <Text>0</Text>
+          </View>
+
+          <View style={styles.postLocationBar}>
+            <SvgUri
+             width="24"
+             height="24"
+             source={require("../../assets/icons/map-icon.svg")}
+            />
+                <Text>{post.location}</Text>
+          </View>
+            
+          </View>
+        </View>
+      </ScrollView>
+    ))}
+      
+      
+
+
         <View style={styles.navMenu}>
           
             <TouchableOpacity onPress={onNavigatePostsScreen}>
@@ -78,13 +134,13 @@ export default function PostsScreen({ navigation }) {
              width="24"
              height="24"
             source={require('../../assets/icons/user-icon.svg')} />  
-            </TouchableOpacity>
+        </TouchableOpacity>
       
+        
       </View>  
-
-      
-
+    
       </View>
+      </ScrollView>
   );
 };
 

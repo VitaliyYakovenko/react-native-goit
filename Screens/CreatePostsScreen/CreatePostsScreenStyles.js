@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         width: 344,
         height: 240,
         marginLeft: "auto",
-        marginRight:"auto",
+        marginRight: "auto",
     },
     imagePost: {
         width: 344,
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F6F6F6",
         marginLeft: "auto",
         marginRight: "auto",
+        borderRadius: 8,
     },
     backgroundImage: {
        position: "absolute",

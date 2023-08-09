@@ -1,9 +1,14 @@
 import { StyleSheet } from "react-native";
 
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  mainBox: {
+    backgroundColor: "white",
+  },
    postsScreen: {
     flex: 1,
+    position: "relative",
+    backgroundColor:"fff",
     justifyContent:"space-between",
     backgroundColor:"#FFF",
   },
@@ -31,6 +36,7 @@ import { StyleSheet } from "react-native";
     marginRight:16,
   },
   userBlock: {
+    
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 32,
@@ -60,6 +66,7 @@ import { StyleSheet } from "react-native";
      width: 344,
      height: 240,
      marginBottom: 8,
+     borderRadius: 8,
    },
    postName: {
      marginBottom: 8,
@@ -79,12 +86,16 @@ import { StyleSheet } from "react-native";
     marginLeft: "auto",
    },
   navMenu: {
+    position: "relative",
+    bottom: 0,
+    width: "100%",
     borderTopWidth: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: "center",
-    marginBottom: 32,
+    paddingBottom: 32,
     paddingTop: 9,
+    backgroundColor:"white",
     },
 
   mainBtn: {

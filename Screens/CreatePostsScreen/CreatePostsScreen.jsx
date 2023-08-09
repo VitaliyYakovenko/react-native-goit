@@ -8,6 +8,7 @@ import {
     TextInput,
 } from "react-native";
 import { Camera } from "expo-camera";
+import * as Location from "expo-location";
 import SvgUri from "react-native-svg-uri";
 import styles from "./CreatePostsScreenStyles";
 
@@ -17,6 +18,7 @@ export default function CreatePostsScreen({ navigation }) {
   const [photo, setPhoto] = useState("");
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
+  const [coords, setCoords] = useState("");
   const [disabled, setDisabled] = useState(true);
   const type = Camera.Constants.Type.back;
 
@@ -35,7 +37,28 @@ export default function CreatePostsScreen({ navigation }) {
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
-    console.log(photo);
+    
+
+    try {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission to access location was denied");
+      return;
+    }
+
+    let locationData = await Location.getCurrentPositionAsync({});
+    setCoords({
+      latitude: locationData.coords.latitude,
+      longitude: locationData.coords.longitude,
+    });
+   
+
+    
+  } catch (error) {
+    console.error("Error fetching location:", error);
+  }
+
+   
   };   
 
 
@@ -55,6 +78,7 @@ export default function CreatePostsScreen({ navigation }) {
       photo: photo,
       name: name,
       location: location,
+      coords: coords,
     }); 
   };
 

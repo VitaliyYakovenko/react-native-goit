@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from 'expo-font';
@@ -18,6 +18,8 @@ import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen"
 import PostsScreen from './Screens/PostsScreen/PostsScreen';
 import CreatePostsScreen from './Screens/CreatePostsScreen/CreatePostsScreen';
 import ProfileScreen from "./Screens/ProfileScreen/ProfileScreen";
+import MapScreen from './Screens/MapScreen/MapScreen';
+import CommentsScreen from './Screens/CommentsScreen/CommentsScreen';
 
 
 
@@ -26,8 +28,7 @@ const MainStack = createStackNavigator();
 
 
 export default function App() {
-   const [cameraValue, setCameraValue] = useState("");
-   console.log(cameraValue);
+
    useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -89,8 +90,15 @@ export default function App() {
         <MainStack.Screen name="ProfileScreen"
           options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}          
           component={ProfileScreen}/>   
-
+ 
+        <MainStack.Screen name="MapScreen"
+          options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}          
+          component={MapScreen}/>         
      
+          <MainStack.Screen name="CommentsScreen"
+          options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}          
+          component={CommentsScreen}/>             
+              
       </MainStack.Navigator> 
 
       </View>

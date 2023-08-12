@@ -4,15 +4,15 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from 'expo-font';
 import {
-  Keyboard,
   StyleSheet,
+  Keyboard,
   View,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
-
 import { createStackNavigator } from "@react-navigation/stack";
+
 import LoginScreen from './Screens/LoginScreen/LoginScreen';
 import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
 import PostsScreen from './Screens/PostsScreen/PostsScreen';
@@ -21,8 +21,9 @@ import ProfileScreen from "./Screens/ProfileScreen/ProfileScreen";
 import MapScreen from './Screens/MapScreen/MapScreen';
 import CommentsScreen from './Screens/CommentsScreen/CommentsScreen';
 
-
-
+import {store, persistor} from "./redux/store";
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 const MainStack = createStackNavigator();
 
 
@@ -54,6 +55,9 @@ export default function App() {
   
 
   return ( 
+    <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+        
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       
     <KeyboardAvoidingView style={styles.keyboardView}
@@ -76,13 +80,10 @@ export default function App() {
            options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}      
            component={RegistrationScreen} />
     
-            
-           
         <MainStack.Screen name="PostsScreen"
           options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}       
           component={PostsScreen}/> 
                   
-
         <MainStack.Screen name="CreatePostsScreen"
           options={{ headerStyle: { ...styles.navEl }, headerLeft: false }}         
           component={CreatePostsScreen}/>
@@ -107,7 +108,9 @@ export default function App() {
     </KeyboardAvoidingView>
       
     </TouchableWithoutFeedback>
-  
+        
+   </PersistGate>       
+   </Provider>
   );
 }
 

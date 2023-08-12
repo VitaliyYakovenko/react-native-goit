@@ -7,21 +7,21 @@ import {
     ImageBackground
 } from 'react-native';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { authUser } from '../../redux/authSlice';
 import styles from './LoginScreenStyles';
 
 
-
 export default function LoginScreen({ navigation }) {
-  
- 
 
-   const isKeyboardVisible = true;
-   const [email, setEmail] = useState(""); 
-   const [password, setPassword] = useState("");
-   const [showPassword, setShowPassword] = useState(false);
-   const [validateInput, setValidateInput] = useState(false);
-   const [isFocusedEmail, setIsFocusedEmail] = useState(false);
-   const [isFocusedPassword, setIsFocusedPassword] = useState(false);
+  const isKeyboardVisible = true;
+  const [email, setEmail] = useState(""); 
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [validateInput, setValidateInput] = useState(false);
+  const [isFocusedEmail, setIsFocusedEmail] = useState(false);
+  const [isFocusedPassword, setIsFocusedPassword] = useState(false);
+  const dispatch = useDispatch();
   
    const handleFocusEmail = () => {
      setIsFocusedEmail(true);
@@ -48,13 +48,13 @@ export default function LoginScreen({ navigation }) {
         if (email === "" || password === "") {
             setValidateInput(true);
             return
-        }
-        navigation.navigate("PostsScreen") 
-        console.log(
-        `Email - ${email}, 
-        Password - ${password}`);
+       }
+      
+      navigation.navigate("PostsScreen");
 
-        reset();
+    
+      dispatch(authUser({email: email, password: password}));
+      reset();
     };
     
     const reset = () => {
@@ -63,6 +63,8 @@ export default function LoginScreen({ navigation }) {
         setValidateInput(false);
     }  
 
+
+  
 
     return (
         <>

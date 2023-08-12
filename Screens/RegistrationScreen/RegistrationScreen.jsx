@@ -8,6 +8,8 @@ import {
     ImageBackground,
 } from 'react-native';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { registerUser } from "../../redux/registrationSlice";
 import styles from "./RegistrationScreenStyles";
 
 
@@ -20,7 +22,9 @@ export default function RegistrationScreen({navigation}) {
    const [isFocusedLogin, setIsFocusedLogin] = useState(false); 
    const [isFocusedEmail, setIsFocusedEmail] = useState(false);
    const [isFocusedPassword, setIsFocusedPassword] = useState(false);
+   const dispatch = useDispatch();
 
+        
     const handleFocusLogin = () => {
         setIsFocusedLogin(true);
     };
@@ -35,36 +39,26 @@ export default function RegistrationScreen({navigation}) {
      setIsFocusedEmail(false);
     }; 
 
-
     const handleFocusPassword = () => {
      setIsFocusedPassword(true);
     };
    const handleBlurPassword = () => {
      setIsFocusedPassword(false);
     };  
-    
-    
-    
-    
-    
-    
+  
    const toggleShowPassword = () => {
     setShowPassword(!showPassword);
     };
-
+  
     const getData = () => {
         if (login === "" || email === "" || password === "") {
             setValidateInput(true);
             return
       }
       
-        navigation.navigate("Home");
-        console.log(
-        `Login - ${login}, 
-        Email - ${email}, 
-        Password - ${password}`);
-
-        reset();
+      navigation.navigate("LoginScreen");
+      dispatch(registerUser({ email, password }));
+      reset();
     };
     
     const reset = () => {
@@ -72,8 +66,9 @@ export default function RegistrationScreen({navigation}) {
         setLogin("");
         setPassword("");
         setValidateInput(false);
-    }
-    
+     }
+
+
 
     return (
         <>
@@ -81,7 +76,7 @@ export default function RegistrationScreen({navigation}) {
         style={styles.backgroundImage}    
         source={require('../../images/photo-bg.png')}>  
         <View style={styles.whiteBgBox}>
-
+ 
                  
         <Image
         style={styles.avatar}        
@@ -90,7 +85,6 @@ export default function RegistrationScreen({navigation}) {
         style={styles.iconAdd}
         source={require("../../images/add.png")} />   
 
-                    
         <Text style={[{ fontFamily: "Roboto-Bold" }, styles.register]}>
         Реєстрація
         </Text>
@@ -102,7 +96,6 @@ export default function RegistrationScreen({navigation}) {
         :<></>
         } 
                     
-
         <TextInput
         placeholder="Логін"
         placeholderTextColor="#BDBDBD"

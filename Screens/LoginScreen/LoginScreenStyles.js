@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         color: "red",
         top: 78,
         zIndex: 2,
-        right: 58,
+        right: 35,
     },
      input: {
         marginLeft: "auto",

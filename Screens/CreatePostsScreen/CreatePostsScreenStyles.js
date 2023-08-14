@@ -34,12 +34,31 @@ const styles = StyleSheet.create({
     },
     postBlock: {
         position: "relative",
-    },
-    imagePost: {
+        width: 344,
+        height: 240,
         marginLeft: "auto",
         marginRight: "auto",
     },
+    imagePost: {
+        width: 344,
+        height: 240,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: "#E8E8E8",
+        borderStyle: "solid",
+        backgroundColor: "#F6F6F6",
+        marginLeft: "auto",
+        marginRight: "auto",
+        borderRadius: 8,
+    },
+    backgroundImage: {
+       position: "absolute",
+       width: "100%",
+       height: "100%",
+       zIndex: 2,
+    },
     ellipseIcon: {
+        zIndex: 3,
         position: "absolute",
         top: "50%",
         left: "50%",
@@ -48,7 +67,7 @@ const styles = StyleSheet.create({
     },
     cameraIcon: {
         position: "absolute",
-        zIndex: 2,
+        zIndex: 3,
         top: "50%",
         left: "50%",
         marginLeft: -12,
@@ -62,7 +81,7 @@ const styles = StyleSheet.create({
         fontWeight: 400,
         color: "#BDBDBD",
     },
-    nameLocation: {
+    nameLocationInput: {
         width: 343,
         marginLeft: 26,
         marginBottom: 32,
@@ -71,7 +90,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 500,
         borderBottomColor: "black",
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
     },
     addressBlock: {
         width: 343,
@@ -81,24 +100,25 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent:"flex-start",
-        alignItems: "flex-start",
+        alignItems: "center",
         borderBottomColor: "black",
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
     },
-    address: {
-        marginLeft: 4,
-        color: "#212121",
-        fontSize: 16,
-        fontWeight: 400,
+    iconLocation: {
+        marginRight: 4,
     },
     publickBtn: {
         marginLeft: "auto",
         marginRight: "auto",
-        backgroundColor: "#FF6C00",
         width: 343,
         height: 51,
         borderRadius: 100,
         marginBottom: 120,
+        backgroundColor: "#F6F6F6",
+      
+    },
+     activePublickBtn: {
+         backgroundColor: "#FF6C00",
     },
     btnText: {
         color: "#FFFFFF",
@@ -106,6 +126,10 @@ const styles = StyleSheet.create({
         paddingTop: 16,
         paddingBottom: 16,
         fontSize: 16,
+        color: "#BDBDBD",
+    },
+    activeBtnText: {
+        color: "#FFF",
     },
     deleteBar: {
         display: "flex",

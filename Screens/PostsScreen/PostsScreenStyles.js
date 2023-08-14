@@ -1,9 +1,14 @@
 import { StyleSheet } from "react-native";
 
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  mainBox: {
+    backgroundColor: "white",
+  },
    postsScreen: {
     flex: 1,
+    position: "relative",
+    backgroundColor:"fff",
     justifyContent:"space-between",
     backgroundColor:"#FFF",
   },
@@ -31,17 +36,27 @@ import { StyleSheet } from "react-native";
     marginRight:16,
   },
   userBlock: {
-    position: "absolute",
-    left: 16,
-    top: 50,
+    
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 32,
     marginLeft: 16,
+    marginBottom: 32,
   },
   userBlockData: {
     flex: 1,
     marginLeft: 8,
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 16,
+  },
+  nullAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 16,
+    backgroundColor: "#F6F6F6",
   },
   name: {
     fontSize: 13,
@@ -49,20 +64,66 @@ import { StyleSheet } from "react-native";
   },
   email: {
     fontSize: 11,
+   },
+  postBar: {
+     width: 344,
+     marginLeft: "auto",
+     marginRight: "auto",
+   },
+  posts: {
+     marginBottom: 34,
+   },
+  imgPost: {
+     width: 344,
+     height: 240,
+     marginBottom: 8,
+     borderRadius: 8,
+   },
+   postName: {
+     marginBottom: 8,
   },
+  postInformBar: {
+    display: "flex",
+    flexDirection:"row",
+    alignItems: "center",
+   },
+  postCommentsBar: {
+    display: "flex",
+    flexDirection:"row",
+   },
+  postLocationBar: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft: "auto",
+   },
   navMenu: {
+    position: "relative",
+    bottom: 0,
+    width: "100%",
     borderTopWidth: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: "center",
-    marginBottom: 32,
+    paddingBottom: 32,
     paddingTop: 9,
-   },
+    backgroundColor:"white",
+    },
 
   mainBtn: {
+    position:"relative",
     marginLeft: 38,
     marginRight: 38,
-   }
+    width: 70,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: "#FF6C00", 
+   },
+  iconPlus: {
+     position: "absolute",
+     left: 10,
+     top:-5,
+     color: "white",
+    }
 });
 
 

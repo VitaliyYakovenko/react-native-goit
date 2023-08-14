@@ -22,23 +22,36 @@ const styles = StyleSheet.create({
     userBlock: {
         top: -66,
         position: "relative",
+        width: 120,
+        height: 120,
+        marginLeft: "auto",
+        marginRight: "auto",
     }, 
     avatarBox: {
         position: "relative",
     },
     avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 16,
         marginLeft: "auto",
         marginRight:"auto",
+    },
+    avatarNull: {
+        width: 120,
+        height: 120,
+        borderRadius: 16,
+        backgroundColor: "#F6F6F6",
     },
     btnRemoveAvatar: {
         position: "absolute",
         bottom: 8,
-        left: 238,    
+        right: -18,
     },
     iconLogOut: {
         position: "absolute",
-        right: 16,
-        top: 82,
+        right: -115,
+        top: 80,
     },
     userName: {
         marginTop:-32,
@@ -81,9 +94,40 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       alignItems:"center",
       marginLeft:"auto",    
-    }
+    },
     
+    
+    navMenu: {
+    backgroundColor: "white",
+    borderTopWidth: 0.5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: "center",
+    paddingBottom: 32,
+    paddingTop: 9,
+    },
+   mainBtn: {
+    marginLeft: 38,
+    marginRight: 30,
+    },
+    mainBtn: {
+       position:"relative",
+       marginLeft: 38,
+       marginRight: 38,
+       width: 70,
+       height: 40,
+       borderRadius: 50,
+       backgroundColor: "#FF6C00", 
+    }
+    ,
+    iconUser: {
+       position: "absolute",
+       right: 22,
+       top:5,
+       fill: "#ffff",
+    }
 });
+
 
 
 export default styles;

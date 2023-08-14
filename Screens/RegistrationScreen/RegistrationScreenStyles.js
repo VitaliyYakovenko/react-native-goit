@@ -9,12 +9,6 @@ import { StyleSheet } from "react-native";
        justifyContent: "flex-end",
     },
     
-    iconAdd: {
-        position: "absolute",
-        left: 230,
-        bottom: 495,
-        zIndex: 3,
-    },
     avatar: {
         position:"absolute",
         marginLeft: "auto",
@@ -22,6 +16,10 @@ import { StyleSheet } from "react-native";
         bottom: 485,
         left: 130,
         zIndex: 2,
+     },
+     avatarImg: {
+         width: 120,
+         height: 120,
     },
     whiteBgBox: {
         position:"relative",

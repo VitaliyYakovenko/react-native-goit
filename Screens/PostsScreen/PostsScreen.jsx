@@ -1,8 +1,10 @@
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { logOutUser } from '../../redux/logOutUser';
 import SvgUri from "react-native-svg-uri";
 import styles from "./PostsScreenStyles";
-
 
 
 export default function PostsScreen({ navigation, route }) {
@@ -10,7 +12,9 @@ export default function PostsScreen({ navigation, route }) {
   const [isShowPosts, setIsShowPosts] = useState(false);
   const [coords, setCoords] = useState(null);
   const [img, setImg] = useState("");
-   
+  const { email, displayName, avatar} = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const { photo, name, location , coords} = route.params || {};
       
@@ -25,9 +29,13 @@ export default function PostsScreen({ navigation, route }) {
     }
   
    }, [route]);
-   
+
+
+
+  
   
   const onLogOut = () => {
+    dispatch(logOutUser());
     navigation.navigate("LoginScreen"); 
   };
 
@@ -80,15 +88,15 @@ export default function PostsScreen({ navigation, route }) {
       </View>
      
       <View style={styles.userBlock}>
-
-      <Image
-        width="24"
-        height="24"
-        source={require("../../images/small-avatar.png")} />
+       
+      {avatar  
+       ?  <Image style={styles.avatar} source={{uri: avatar}} />
+       :  <View style={styles.nullAvatar}></View>}     
+      
         
       <View style={styles.userBlockData}>
-      <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.name]]}>Natali Romanova</Text>
-      <Text style={[[{ fontFamily: "Roboto-Medium" }, styles.email]]}>email@example.com</Text>
+      <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.name]]}>{displayName}</Text>
+      <Text style={[[{ fontFamily: "Roboto-Medium" }, styles.email]]}>{email}</Text>
       </View>
       </View>
 

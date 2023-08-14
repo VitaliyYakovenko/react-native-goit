@@ -47,6 +47,17 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 8,
   },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 16,
+  },
+  nullAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 16,
+    backgroundColor: "#F6F6F6",
+  },
   name: {
     fontSize: 13,
     fontWeight: 500,

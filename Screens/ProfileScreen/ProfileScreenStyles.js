@@ -31,8 +31,17 @@ const styles = StyleSheet.create({
         position: "relative",
     },
     avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 16,
         marginLeft: "auto",
         marginRight:"auto",
+    },
+    avatarNull: {
+        width: 120,
+        height: 120,
+        borderRadius: 16,
+        backgroundColor: "#F6F6F6",
     },
     btnRemoveAvatar: {
         position: "absolute",

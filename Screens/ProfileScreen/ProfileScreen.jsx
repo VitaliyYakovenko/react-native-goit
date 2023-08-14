@@ -6,6 +6,9 @@ import {
     TouchableOpacity,
     ScrollView,
 } from "react-native";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { logOutUser } from '../../redux/logOutUser';
 import SvgUri from "react-native-svg-uri";
 import styles from "./ProfileScreenStyles";
 
@@ -36,7 +39,10 @@ const posts = [
 
 
 export default function ProfileScreen({navigation}) {
-    
+    const { displayName , avatar} = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
+    console.log(avatar);
 
     const onNavigatePostsScreen = () => {
       navigation.navigate("PostsScreen")
@@ -50,11 +56,12 @@ export default function ProfileScreen({navigation}) {
        navigation.navigate("ProfileScreen")
    }
  
-    const onLogOut = () => {
-    navigation.navigate("LoginScreen"); 
+   const onLogOut = () => {
+       dispatch(logOutUser()); 
+       navigation.navigate("LoginScreen"); 
     };
   
-    const onHandleScroll = (e) => {
+   const onHandleScroll = (e) => {
      const offsetY = e.nativeEvent.contentOffset.y;
     };
 
@@ -68,13 +75,12 @@ export default function ProfileScreen({navigation}) {
     <View style={styles.whiteBgBox}>
   
         <View style={styles.userBlock}> 
-                    
-            <View style={styles.avatarBox} >      
-                <Image style={styles.avatar} 
-                source={require("../../images/avatar.png")} />
-                <Image
-                style={styles.btnRemoveAvatar}
-                source={require("../../images/add.png")} />          
+          
+            <View style={styles.avatarBox}>
+                {avatar
+                ? <Image style={styles.avatar} source={{uri: avatar}} />
+                : <View style={styles.avatarNull}></View>
+               }
             </View>
                 
         <TouchableOpacity
@@ -88,7 +94,7 @@ export default function ProfileScreen({navigation}) {
         </View>
 
 
-        <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.userName]]}>Natali Romanova</Text>
+        <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.userName]]}>{displayName}</Text>
     
        <ScrollView styles={styles.scrollViewContent}>
         {posts.map((post) => (

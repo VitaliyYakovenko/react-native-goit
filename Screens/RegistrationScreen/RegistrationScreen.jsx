@@ -7,9 +7,10 @@ import {
     Image,
     ImageBackground,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { registerUser } from "../../redux/registrationSlice";
+import { registerUser } from "../../redux/registrationUser";
 import styles from "./RegistrationScreenStyles";
 
 
@@ -17,6 +18,7 @@ export default function RegistrationScreen({navigation}) {
    const [login, setLogin] = useState("");
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [avatar, setAvatar] = useState(null);
    const [showPassword, setShowPassword] = useState(false);
    const [validateInput, setValidateInput] = useState(false);
    const [isFocusedLogin, setIsFocusedLogin] = useState(false); 
@@ -57,7 +59,7 @@ export default function RegistrationScreen({navigation}) {
       }
       
       navigation.navigate("LoginScreen");
-      dispatch(registerUser({ email, password }));
+      dispatch(registerUser({ email, password ,login, avatar}));
       reset();
     };
     
@@ -68,7 +70,19 @@ export default function RegistrationScreen({navigation}) {
         setValidateInput(false);
      }
 
-
+    const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+        setAvatar(result.assets[0].uri)
+    }
+  };
+ 
 
     return (
         <>
@@ -77,14 +91,14 @@ export default function RegistrationScreen({navigation}) {
         source={require('../../images/photo-bg.png')}>  
         <View style={styles.whiteBgBox}>
  
-                 
-        <Image
-        style={styles.avatar}        
-        source={require("../../images/avatar.png")} />
-        <Image
-        style={styles.iconAdd}
-        source={require("../../images/add.png")} />   
-
+      <TouchableOpacity onPress={pickImage} style={styles.avatar} >
+       {avatar ? (
+       <Image style={styles.avatarImg} source={{ uri: avatar }}/>
+       ) : (
+      <Image
+      source={require("../../images/add-photo-register.png")}/>)} 
+      </TouchableOpacity> 
+              
         <Text style={[{ fontFamily: "Roboto-Bold" }, styles.register]}>
         Реєстрація
         </Text>

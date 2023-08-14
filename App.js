@@ -12,7 +12,6 @@ import {
   Platform
 } from 'react-native';
 import { createStackNavigator } from "@react-navigation/stack";
-
 import LoginScreen from './Screens/LoginScreen/LoginScreen';
 import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
 import PostsScreen from './Screens/PostsScreen/PostsScreen';
@@ -20,7 +19,6 @@ import CreatePostsScreen from './Screens/CreatePostsScreen/CreatePostsScreen';
 import ProfileScreen from "./Screens/ProfileScreen/ProfileScreen";
 import MapScreen from './Screens/MapScreen/MapScreen';
 import CommentsScreen from './Screens/CommentsScreen/CommentsScreen';
-
 import {store, persistor} from "./redux/store";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -29,7 +27,8 @@ const MainStack = createStackNavigator();
 
 
 export default function App() {
-
+     
+  
    useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -51,7 +50,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
+ 
   
 
   return ( 

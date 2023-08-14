@@ -6,14 +6,14 @@ import {
     View,
     ImageBackground
 } from 'react-native';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { authUser } from '../../redux/authSlice';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logInUser } from '../../redux/logInUser';
+import { refreshUser } from '../../redux/refreshUser';
 import styles from './LoginScreenStyles';
 
 
 export default function LoginScreen({ navigation }) {
-
   const isKeyboardVisible = true;
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
@@ -22,7 +22,23 @@ export default function LoginScreen({ navigation }) {
   const [isFocusedEmail, setIsFocusedEmail] = useState(false);
   const [isFocusedPassword, setIsFocusedPassword] = useState(false);
   const dispatch = useDispatch();
+  const {isLogIn, isRefreshing} = useSelector(state => state.auth);
+   
+  useEffect(() => {
+    
+    dispatch(refreshUser());
+
+    if (isRefreshing) {
+    
+      navigation.navigate("PostsScreen");
+      reset();
+    }
+  }, [isLogIn, navigation]);
+
   
+
+
+
    const handleFocusEmail = () => {
      setIsFocusedEmail(true);
     };
@@ -40,22 +56,23 @@ export default function LoginScreen({ navigation }) {
     
     
    const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+     setShowPassword(!showPassword);
     };
     
-    const getData = () => {
-       
-        if (email === "" || password === "") {
-            setValidateInput(true);
-            return
-       }
-      
-      navigation.navigate("PostsScreen");
-
-    
-      dispatch(authUser({email: email, password: password}));
-      reset();
-    };
+   const getData = async() => {
+     
+     if (email === "" || password === "" ) {
+        setValidateInput(true);
+        return;
+      }
+  
+    await dispatch(logInUser({ email: email, password: password }));
+     
+    if (!isLogIn) return;
+     
+    navigation.navigate("PostsScreen");
+    reset();
+  };
     
     const reset = () => {
         setEmail("");
@@ -63,9 +80,16 @@ export default function LoginScreen({ navigation }) {
         setValidateInput(false);
     }  
 
-
   
-
+    useEffect(() => {
+    if (isLogIn) {
+      navigation.navigate("PostsScreen");
+      reset();
+    }
+    }, [isLogIn, navigation]);
+    
+  
+   
     return (
         <>
         <ImageBackground
@@ -86,7 +110,10 @@ export default function LoginScreen({ navigation }) {
         Ви пропустили одне з обов'язкових полів
         </Text>
         :<></>}  
-
+       
+        {/* {error && <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.validateText]]}>
+        Не вірно введено пароль або електронна пошта</Text>}     */}
+             
 
         <TextInput        
         placeholder="Адреса електронної пошти"

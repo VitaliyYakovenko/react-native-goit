@@ -1,30 +1,72 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { registerUser } from "./registrationUser";
+import { logInUser } from "./logInUser";
+import { logOutUser } from "./logOutUser";
+import { refreshUser } from "./refreshUser";
 
-
-export const authUser = createAsyncThunk(
-    "authentication/authenticationUser",
-    async (userData, _) => {
-       
-    try {
-        const data = await signInWithEmailAndPassword(auth, userData.email, userData.password);
-        const displayName = data.user.displayName;
-        const token = data.user.stsTokenManager.accessToken;
-        return { displayName, token };
-    } catch (error) {
-        console.log(error.message);
-        throw error;
-    }
-  }
-);
 
 const initialState = {
+    user: null,
     token: null,
-    error: null,
     displayName: null,
+    avatar: null,
+    email : null,
+    isLogIn: false,
+    isRefreshing: false,
 };
+
+const authSlice = createSlice({
+    name:"auth/authUser", 
+    initialState,
+    reducers: {},
+    extraReducers : (builder) => {
+    builder
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLogIn = false;
+      })
+      .addCase(registerUser.rejected, (state, _) => {
+      })
+      .addCase(logInUser.fulfilled, (state, action) => {
+        state.displayName = action.payload.displayName;
+        state.token = action.payload.token;
+        state.email = action.payload.email;
+        state.avatar = action.payload.avatar;
+        state.isLogIn = true;
+      })
+      .addCase(logInUser.rejected, (state, _) => {
+        state.email = null;
+        state.displayName = null;
+        state.isLogIn = false;
+        state.token = null;
+      })
+      .addCase(logOutUser.fulfilled, (state, _) => {
+        state.token = null;
+        state.isLogIn = false;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.pending, (state, _) => {
+         state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.token = action.payload.refreshedToken;
+        state.email = action.payload.email;
+        state.displayName = action.payload.displayName;
+        state.avatar = action.payload.avatar;
+        state.isLogIn = true;
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.rejected, (state, _) => {
+        state.isRefreshing = false;
+        state.isLogIn = false;
+      })
+    },
+});
+
+
+export const authReducer = authSlice.reducer;
+
+
 
 // const asdas = {
 //     "_redirectEventId": undefined,
@@ -43,29 +85,3 @@ const initialState = {
 //     "tenantId": undefined,
 //     "uid": "Tpw3pX1ovsVOsyqnw7V5vWlPFBy1"
 // }
-// console.log(asdas.stsTokenManager.accessToken);
-
-export const  authSlice = createSlice({
-    name: "authentication",
-    initialState,
-    reducers: {},
-      extraReducers: (builder) => {
-    builder
-      .addCase(authUser.fulfilled, (state, action) => {
-        state.displayName = action.payload.displayName;
-        state.token = action.payload.token;
-        console.log(state.token);
-      })
-      .addCase(authUser.rejected, (state, action) => {
-        state.error = action.error;
-      });
-    },
-
-});
-
-
-export const { authentication } = authSlice.actions; 
-
-
-
-

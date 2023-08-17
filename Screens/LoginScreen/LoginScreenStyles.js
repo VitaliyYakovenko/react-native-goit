@@ -22,18 +22,16 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 0,
         backgroundColor: "#fff",
     },
-    // activeKeyboard: {
-    //     top: 180,
-    // },
     validateText: {
+        width: 340,
         position: "absolute",
         fontWeight: 600,
         color: "red",
-        top: 78,
+        top: 66,
         zIndex: 2,
-        right: 35,
+        right: 26,
     },
-     input: {
+    input: {
         marginLeft: "auto",
         marginRight: "auto",
 

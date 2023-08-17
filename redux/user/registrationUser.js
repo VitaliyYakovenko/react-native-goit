@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { auth } from "../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 const db = getFirestore();
 

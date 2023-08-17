@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -7,26 +7,46 @@ import {
     TouchableOpacity,
     TextInput
 } from "react-native";
+import { useDispatch,useSelector } from "react-redux";
 import SvgUri from "react-native-svg-uri";
+import { getPostById } from "../../redux/posts/getPostById";
+import { createComment } from "../../redux/posts/createComment";
+import { getAllCommentsById } from "../../redux/posts/getAllCommentsById";
+import { formatDateAndTime } from "../../utils/formatDateAndTime";
 import styles from "./CommentsScreenStyles";
 
 export default function CommentsScreen({ navigation, route }) {
-    const [comment, setComment] = useState("");
- 
-    const { img} = route.params || {};  
-   
+    const { photo } = useSelector((state) => state.posts.post) || "";
+    const { comments } = useSelector((state) => state.posts) || [];
+    const {avatar} = useSelector((state) => state.auth);
+    const [text, setText] = useState("");
+    const date = formatDateAndTime();
 
-    const onGoBack = () => {
-        
+    const dispatch = useDispatch();
+    const { id } = route.params || {};  
+    
+
+    useEffect(() => {
+        dispatch(getPostById(id));
+    }, []);
+   
+     
+
+    useEffect(() => {
+        dispatch(getAllCommentsById(id));   
+     }, [dispatch,text]);
+       
+
+    const onSendComment = () => {
+
+        dispatch(createComment({id:id, text: text, timestamp: date}));
+        setText("");
+    };
+
+    const onGoBack = () => {    
         navigation.navigate("PostsScreen");
     }
 
-    const onSendComment = () => {
-        console.log(comment);
-        setComment("");
-    };
-    
-    
     return (
         <>
         <ScrollView>
@@ -38,49 +58,23 @@ export default function CommentsScreen({ navigation, route }) {
             <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>Коментарі</Text>
         </View>
         <View>
-        <Image style={styles.imgPost} source={{uri: img}}/>
-        </View>
-     
-        <View style={styles.commentBlock}>
-            <Image style={styles.userAvatar} source={require("../../images/avatar-user-comments.png")} />
-              <View style={styles.textCommentsBlock}>
-                 <Text style={[{ fontFamily: "Roboto-Medium" }, styles.commentText]}>Really love your most recent photo.
-                   I’ve been trying to capture the same
-                   thing for a few months and would love some tips!
-                 </Text>
-                 <Text style={[{ fontFamily: "Roboto-Medium" }, styles.commentDate]}>
-                 09 червня, 2020 | 08:40  
-                 </Text>
-              </View>
+        <Image style={styles.imgPost} source={{uri: photo}}/>
         </View>
 
-         <View style={styles.commentBlock}>
+        {comments.map(comment => (
+            <View key={comment.id} style={styles.commentBlock}>
+            <Image style={styles.userAvatar} source={{uri: avatar}} />
               <View style={styles.textCommentsBlock}>
-                 <Text style={[{ fontFamily: "Roboto-Medium" }, styles.commentText]}>Really love your most recent photo.
-                    A fast 50mm like f1.8 would help with the bokeh.
-                    I’ve been using primes as they tend to get a bit sharper images.
-                 </Text>
-                 <Text style={[{ fontFamily: "Roboto-Medium" }, styles.myCommentDate]}>
-                 09 червня, 2020 | 09:14  
-                 </Text>
-            </View>
-           <Image style={styles.myAvatar} source={require("../../images/my-avatar-comments.png")} /> 
-        </View>
-
-        
-        <View style={styles.commentBlock}>
-            <Image style={styles.userAvatar} source={require("../../images/avatar-user-comments.png")} />
-              <View style={styles.textCommentsBlock}>
-                 <Text style={[{ fontFamily: "Roboto-Medium" }, styles.commentText]}>Really love your most recent photo.
-                  Thank you! That was very helpful!
+                  <Text style={[{ fontFamily: "Roboto-Medium" }, styles.commentText]}>
+                  {comment.text}      
                  </Text>
                  <Text style={[{ fontFamily: "Roboto-Medium" }, styles.commentDate]}>
-                09 червня, 2020 | 09:20  
+                  {comment.timestamp}
                  </Text>
               </View>
-        </View>
-       
-        
+           </View>
+        ))}     
+
         </ScrollView>
         <View styles={styles.inputBar}>
             <View style={styles.inputBlock}>
@@ -90,8 +84,8 @@ export default function CommentsScreen({ navigation, route }) {
             fontSize={16}   
             fontFamily="Roboto-Light"
             style={styles.input}
-            value={comment}
-            onChangeText={setComment}            
+            value={text}
+            onChangeText={setText}            
             />
                <TouchableOpacity style={styles.sendCommentImg} onPress={onSendComment}>    
                 <Image 
@@ -101,6 +95,7 @@ export default function CommentsScreen({ navigation, route }) {
         </View>    
         </>)
 };
+
 
 
 

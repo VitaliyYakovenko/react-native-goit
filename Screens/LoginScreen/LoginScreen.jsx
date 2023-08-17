@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logInUser } from '../../redux/logInUser';
-import { refreshUser } from '../../redux/refreshUser';
+import { logInUser } from '../../redux/user/logInUser';
+import { refreshUser } from '../../redux/user/refreshUser';
 import styles from './LoginScreenStyles';
 
 
@@ -18,12 +18,13 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [validateInput, setValidateInput] = useState(false);
   const [isFocusedEmail, setIsFocusedEmail] = useState(false);
   const [isFocusedPassword, setIsFocusedPassword] = useState(false);
   const dispatch = useDispatch();
   const {isLogIn, isRefreshing} = useSelector(state => state.auth);
-   
+  const [validateInput, setValidateInput] = useState(false);
+
+
   useEffect(() => {
     
     dispatch(refreshUser());
@@ -64,7 +65,8 @@ export default function LoginScreen({ navigation }) {
      if (email === "" || password === "" ) {
         setValidateInput(true);
         return;
-      }
+     }
+   
   
     await dispatch(logInUser({ email: email, password: password }));
      
@@ -105,15 +107,11 @@ export default function LoginScreen({ navigation }) {
         Увійти
         </Text>      
         
-        {validateInput
-        ? <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.validateText]]}>
-        Ви пропустили одне з обов'язкових полів
-        </Text>
-        :<></>}  
-       
-        {/* {error && <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.validateText]]}>
-        Не вірно введено пароль або електронна пошта</Text>}     */}
-             
+      {validateInput && 
+          <Text
+          style ={[[{fontFamily: "Roboto-Bold"}, styles.validateText]]}
+          >Не вірно введено пароль або електронна пошта, або не вистачає даних</Text>
+      }      
 
         <TextInput        
         placeholder="Адреса електронної пошти"

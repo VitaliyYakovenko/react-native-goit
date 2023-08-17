@@ -10,6 +10,8 @@ import {
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 import SvgUri from "react-native-svg-uri";
+import { createPost } from "../../redux/posts/createPost";
+import { useDispatch } from "react-redux";
 import styles from "./CreatePostsScreenStyles";
 
 
@@ -21,6 +23,7 @@ export default function CreatePostsScreen({ navigation }) {
   const [coords, setCoords] = useState("");
   const [disabled, setDisabled] = useState(true);
   const type = Camera.Constants.Type.back;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     
@@ -74,11 +77,17 @@ export default function CreatePostsScreen({ navigation }) {
     setPhoto("");
     setLocation("");
     setName("");
-    navigation.navigate("PostsScreen", {
+    
+    const data = {
       photo: photo,
       name: name,
       location: location,
       coords: coords,
+    }
+    dispatch(createPost(data));
+    
+    navigation.navigate("PostsScreen", {
+      photo: photo,
     }); 
   };
 

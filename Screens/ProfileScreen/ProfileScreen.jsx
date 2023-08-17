@@ -6,43 +6,38 @@ import {
     TouchableOpacity,
     ScrollView,
 } from "react-native";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { logOutUser } from '../../redux/logOutUser';
+import { useState} from "react";
+import { useSelector , useDispatch} from "react-redux";
+import * as ImagePicker from 'expo-image-picker';
+import { logOutUser } from '../../redux/user/logOutUser';
 import SvgUri from "react-native-svg-uri";
+import { updateAvatarUser } from "../../redux/user/updateAvatarUser";
+import { deletePost } from "../../redux/posts/deletePost";
 import styles from "./ProfileScreenStyles";
 
-const posts = [
-    {
-        img: require("../../images/post-image.png"),
-        comments: 8,
-        likes: 153,
-        location: "Ліс",
-        country: "Ukraine",
-    },
-    {
-        img: require("../../images/post-image-3.png"),
-        comments: 3,
-        likes: 200,
-        location: "Захід на Чорному морі",
-        country: "Ukraine",
-    },
-    {
-        img: require("../../images/post-image-2.png"),
-        comments: 50,
-        likes: 200,
-        location: "Старий будиночок у Венеції",
-        country: "Italy",        
-    }
-]
 
 
 
-export default function ProfileScreen({navigation}) {
-    const { displayName , avatar} = useSelector((state) => state.auth);
+export default function ProfileScreen({ navigation }) {
+    const [newAvatar, setNewAvatar] = useState("");
+    const { displayName, avatar, posts } = useSelector((state) => ({
+    displayName: state.auth.displayName,
+    avatar: state.auth.avatar,
+    posts: state.posts.posts,
+    }));
     const dispatch = useDispatch();
 
-    console.log(avatar);
+    const onNavigateOnComments = (id) => {
+        navigation.navigate("CommentsScreen", {
+            id: id,
+        })
+    };
+
+    const onNavigateOnMapScreen = (id) => {
+           navigation.navigate("MapScreen", {
+            id: id,
+        })
+    };
 
     const onNavigatePostsScreen = () => {
       navigation.navigate("PostsScreen")
@@ -65,6 +60,25 @@ export default function ProfileScreen({navigation}) {
      const offsetY = e.nativeEvent.contentOffset.y;
     };
 
+
+    const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+        dispatch(updateAvatarUser(result.assets[0].uri));
+        setNewAvatar(result.assets[0].uri);
+    }
+    };
+  
+    const onDeletePost = (id) => {
+        dispatch(deletePost(id));
+    };
+     
     return (
         <>
     <ScrollView onScroll={onHandleScroll} style={styles.scrollViewContent}>
@@ -75,8 +89,12 @@ export default function ProfileScreen({navigation}) {
     <View style={styles.whiteBgBox}>
   
         <View style={styles.userBlock}> 
-          
-            <View style={styles.avatarBox}>
+                
+                <View style={styles.avatarBox}>
+                
+                <TouchableOpacity onPress={pickImage}  style={styles.iconAdd}>              
+                <Image  source={require("../../images/add.png")} /> 
+                </TouchableOpacity>                      
                 {avatar
                 ? <Image style={styles.avatar} source={{uri: avatar}} />
                 : <View style={styles.avatarNull}></View>
@@ -97,30 +115,43 @@ export default function ProfileScreen({navigation}) {
         <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.userName]]}>{displayName}</Text>
     
        <ScrollView styles={styles.scrollViewContent}>
-        {posts.map((post) => (
-          <View style={styles.postContent} key={post.img}>
-            <Image style={styles.imgPost} source={post.img} />
+        {posts.map((post) => (    
+            <View style={styles.postContent} key={post.id}>
+            <TouchableOpacity onPress={() =>onDeletePost(post.id)} style={styles.removePostIcon}>
+                 <Image  source={require("../../images/add.png")} />
+            </TouchableOpacity>   
+
+            <Image style={styles.imgPost} source={{uri: post.photo}} />
             <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.locationPost]]}>{post.location}</Text>
 
             <View style={styles.infomationPostBox}>
 
-            <View style={styles.commentsBox}>        
-            <Image style={styles.postIcons} source={require("../../images/comment-img.png")}/> 
+            <TouchableOpacity onPress={() => onNavigateOnComments(post.id)} style={styles.commentsBox}> 
+                        
+            {post.comments === 0
+            ? <SvgUri
+             width="24"
+             height="24"
+             source={require("../../assets/icons/no-commetns-icon.svg")}  
+            /> 
+            : <Image source={require("../../images/comment-img.png")}/>
+            }         
+            
             <Text>{post.comments}</Text>
-            </View> 
+            </TouchableOpacity> 
                 
             <Image style={styles.postIcons} source={require("../../images/like-img.png")}/> 
-            <Text>{post.likes}</Text>       
+            <Text>0</Text>       
        
                 
-            <View style={styles.countryBox}>        
+            <TouchableOpacity  onPress={() => onNavigateOnMapScreen(post.id)} style={styles.countryBox}>        
             <SvgUri
             style={styles.postIcons}            
             width="24"
             height="24"
             source={require("../../assets/icons/map-icon.svg")} /> 
-            <Text>{post.country}</Text>
-            </View> 
+            <Text>{post.name}</Text>
+            </TouchableOpacity> 
 
             </View>                 
           </View>
@@ -128,10 +159,10 @@ export default function ProfileScreen({navigation}) {
                     
         </ScrollView>       
         </View>
-    </ImageBackground>
-     <View style={styles.navMenu}>
+    </ImageBackground>        
+        </ScrollView>  
             
-        
+            <View style={styles.navMenu}>     
             <TouchableOpacity onPress={onNavigatePostsScreen}>
             <SvgUri 
              width="24"
@@ -155,11 +186,8 @@ export default function ProfileScreen({navigation}) {
              width="40"
              height="40"
             source={require('../../assets/icons/plus-icon.svg')} />  
-            </TouchableOpacity>
-         
-                    
-      </View>              
-        </ScrollView>  
+            </TouchableOpacity>                    
+      </View>     
        </>     
     )
 };

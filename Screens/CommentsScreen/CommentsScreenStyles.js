@@ -51,6 +51,9 @@ const styles = StyleSheet.create({
         marginBottom: 32,
     },
     userAvatar: {
+        width: 28,
+        height: 28,
+        borderRadius: 50,
         marginRight: 16,
     },
     textCommentsBlock: {
@@ -71,15 +74,6 @@ const styles = StyleSheet.create({
     },
     commentDate: {
         textAlign: "right",
-        color: "#BDBDBD",
-        fontSize: 10,
-        fontWeight: 400,
-    },
-    myAvatar: {
-        marginLeft: 16,
-    },
-    myCommentDate: {
-        textAlign: "left",
         color: "#BDBDBD",
         fontSize: 10,
         fontWeight: 400,

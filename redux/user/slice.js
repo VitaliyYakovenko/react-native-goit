@@ -3,6 +3,7 @@ import { registerUser } from "./registrationUser";
 import { logInUser } from "./logInUser";
 import { logOutUser } from "./logOutUser";
 import { refreshUser } from "./refreshUser";
+import { updateAvatarUser } from "./updateAvatarUser";
 
 
 const initialState = {
@@ -59,6 +60,9 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, (state, _) => {
         state.isRefreshing = false;
         state.isLogIn = false;
+      })
+      .addCase(updateAvatarUser.fulfilled, (state, action) => {
+        state.avatar = action.payload;
       })
     },
 });

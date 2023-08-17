@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
 
     scrollViewContent: {
         flexGrow: 1,
+        backgroundColor: "white",
     },
 
     backgroundImage: {
@@ -29,6 +30,14 @@ const styles = StyleSheet.create({
     }, 
     avatarBox: {
         position: "relative",
+        width: 120,
+        height: 120,
+    },
+    iconAdd: {
+        zIndex: 2,
+        position: "absolute",
+        bottom: 12,
+        right: -18,
     },
     avatar: {
         width: 120,
@@ -64,11 +73,20 @@ const styles = StyleSheet.create({
         letterSpacing: 0.3,
     },
     postContent: {
+        position: "relative",
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: 35,
     },
+    removePostIcon: {
+        position: "absolute",
+        zIndex: 2,
+        top: 0,
+    },
     imgPost: {
+        borderRadius: 8,
+        width: 344,
+        height: 240,
         marginBottom:8,
     },
     locationPost: {

@@ -1,24 +1,37 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import SvgUri from "react-native-svg-uri";
 import MapView, { Marker } from "react-native-maps";
+import { getPostById } from "../../redux/posts/getPostById";
 
 
-export default function MapScreen({navigation ,route}) {
-    const { coords } = route.params || {};
-    const { latitude, longitude } = coords;
+export default function MapScreen({ navigation, route }) {
+    const post = useSelector((state) => state.posts.post) || {};
+    const latitude = post?.coords?.latitude;
+    const longitude = post?.coords?.longitude;
+    const dispatch = useDispatch();
+    const { id } = route.params || {};
+
+    console.log("latitude : " ,latitude,"longitude : ",longitude)
+  
+   useEffect(() => { 
+    dispatch(getPostById(id));
+    }, []);
+  
+ 
 
     const onGoBack = () => {
         navigation.navigate("PostsScreen");
     }
 
+  
     const [mapRegion, setMapRegion] = useState({
-    latitude: latitude,
-    longitude: longitude,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+       latitude: latitude,
+       longitude: longitude,
+       latitudeDelta: 0.0922,
+       longitudeDelta: 0.0421,
     });
-
 
     useEffect(() => {
     setMapRegion((prevRegion) => ({
@@ -30,14 +43,14 @@ export default function MapScreen({navigation ,route}) {
 
     
     const onRegionChange = (region) => {
-    console.log("New map region:", region);
+      console.log("New map region:", region);
   };
     
     
     return (
       <>
     <View style={styles.container}>
-         <TouchableOpacity onPress={onGoBack} style={styles.iconGoBack}>      
+          <TouchableOpacity onPress={onGoBack} style={styles.iconGoBack}>      
             <SvgUri
                 width="24"
                 height="24"
@@ -49,14 +62,13 @@ export default function MapScreen({navigation ,route}) {
         mapType="standard"
         minZoomLevel={15}
         onRegionChangeComplete={onRegionChange}
-     
       >
         <Marker
           title="I am here"
-          coordinate={{ latitude:latitude, longitude: longitude }}
+          coordinate={{ latitude:latitude || 0, longitude: longitude  || 0}}
           description='Hello'
         />
-      </MapView>
+      </MapView> 
     </View>
     </>);
 }

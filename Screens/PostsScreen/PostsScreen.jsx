@@ -1,39 +1,27 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useIsFocused } from '@react-navigation/native';
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
-import { logOutUser } from '../../redux/logOutUser';
+import { fetchPosts } from "../../redux/posts/fetchPosts";
+import { logOutUser } from "../../redux/user/logOutUser";
 import SvgUri from "react-native-svg-uri";
 import styles from "./PostsScreenStyles";
 
 
-export default function PostsScreen({ navigation, route }) {
-  const [posts, setPosts] = useState([]);
-  const [isShowPosts, setIsShowPosts] = useState(false);
-  const [coords, setCoords] = useState(null);
-  const [img, setImg] = useState("");
-  const { email, displayName, avatar} = useSelector((state) => state.auth);
+export default function PostsScreen({ navigation }) {
+  const isFocused = useIsFocused();
+  const { posts } = useSelector((state) => state.posts);
+  const { email, displayName, avatar } = useSelector((state) => state.auth);
+  
   const dispatch = useDispatch();
-
+ 
   useEffect(() => {
-    const { photo, name, location , coords} = route.params || {};
-      
-    setCoords(coords);
-    setImg(photo);
-    if (photo && name && location) {
-     
-      const data = { photo, name, location };
-      
-      setPosts((prev) => [...prev, data]);
-      setIsShowPosts(true);
-    }
-  
-   }, [route]);
+    dispatch(fetchPosts())
 
+  },[dispatch, isFocused]);
+   
 
-
-  
-  
   const onLogOut = () => {
     dispatch(logOutUser());
     navigation.navigate("LoginScreen"); 
@@ -55,16 +43,16 @@ export default function PostsScreen({ navigation, route }) {
      const offsetY = e.nativeEvent.contentOffset.y;
     };
 
-  const onNavigatOnMap = () => {
+  const onNavigatOnMap = (id) => {
     navigation.navigate("MapScreen", {
-       coords: coords,
+       id: id
     });
   }
 
-  const onNavigatOnComments = () => {
+  const onNavigatOnComments = (id) => {
     navigation.navigate("CommentsScreen", {
-        img: img,
-      });
+      id: id,
+    });
   };
   
   return (
@@ -100,23 +88,27 @@ export default function PostsScreen({ navigation, route }) {
       </View>
       </View>
 
-    {isShowPosts && posts.map(post => (
-        <ScrollView onScroll={onHandleScroll} key={post.photo} style={styles.postBar}>
+    {posts && posts.map(post=> (
+        <ScrollView onScroll={onHandleScroll} key={post.id} style={styles.postBar}>
         <View style={styles.posts}>
         <Image style={styles.imgPost} source={{uri: post.photo}}/>
           <Text style={styles.postName}>{post.name}</Text>
           <View style={styles.postInformBar}>
 
-          <TouchableOpacity onPress={onNavigatOnComments} style={styles.postCommentsBar}>
-            <SvgUri
+          <TouchableOpacity onPress={() => onNavigatOnComments(post.id)} style={styles.postCommentsBar}>
+            {post.comments === 0
+            ? <SvgUri
              width="24"
              height="24"
              source={require("../../assets/icons/no-commetns-icon.svg")}  
-            />
-            <Text>0</Text>
+            /> 
+            : <Image source={require("../../images/comment-img.png")}/>
+            }   
+          
+            <Text>{post.comments}</Text>
           </TouchableOpacity>
          
-          <TouchableOpacity onPress={onNavigatOnMap} style={styles.postLocationBar}> 
+          <TouchableOpacity onPress={() => onNavigatOnMap(post.id)} style={styles.postLocationBar}> 
             <SvgUri
              width="24"
              height="24"

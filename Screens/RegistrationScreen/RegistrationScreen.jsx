@@ -10,7 +10,7 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { registerUser } from "../../redux/registrationUser";
+import { registerUser } from "../../redux/user/registrationUser";
 import styles from "./RegistrationScreenStyles";
 
 

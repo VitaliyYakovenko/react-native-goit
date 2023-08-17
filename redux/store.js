@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"; 
-import { authReducer } from "./slice";
+import { authReducer } from "./user/slice";
+import { postsReducer } from "./posts/slice";
 import {
   persistReducer,
   persistStore,
@@ -23,6 +24,7 @@ const persistAuth = persistReducer(persistConfig, authReducer);
 const store = configureStore({
   reducer: {
     auth: persistAuth,
+    posts: postsReducer,
   },
    middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

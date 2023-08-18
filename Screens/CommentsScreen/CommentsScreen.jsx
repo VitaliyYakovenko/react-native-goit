@@ -52,7 +52,7 @@ export default function CommentsScreen({ navigation, route }) {
         <View style={styles.navBar}>
             <TouchableOpacity style={styles.iconGoBack}  onPress={onGoBack}>
             <Image width="24" height="24"      
-                source={require("../../images/arr")} />
+                source={require("../../images/arrow-left.png")} />
             </TouchableOpacity>      
             <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>Коментарі</Text>
         </View>

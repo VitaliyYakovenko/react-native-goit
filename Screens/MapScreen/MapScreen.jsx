@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import SvgUri from "react-native-svg-uri";
+import { View, Image,TouchableOpacity } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { getPostById } from "../../redux/posts/getPostById";
-
+import styles from "./MapScreenStyles";
 
 export default function MapScreen({ navigation, route }) {
     const post = useSelector((state) => state.posts.post) || {};
@@ -51,10 +50,10 @@ export default function MapScreen({ navigation, route }) {
       <>
     <View style={styles.container}>
           <TouchableOpacity onPress={onGoBack} style={styles.iconGoBack}>      
-            <SvgUri
+            <Image
                 width="24"
                 height="24"
-                source={require("../../assets/icons/arrow-left.svg")} />
+                source={require("../../images/arrow-left.png")} />
           </TouchableOpacity>      
       <MapView
         style={styles.mapStyle}
@@ -73,24 +72,3 @@ export default function MapScreen({ navigation, route }) {
     </>);
 }
 
-
-const styles = StyleSheet.create({
-    iconGoBack: {
-        position: "absolute",
-        top: 40,
-        left: 20,
-    },
-    container: {
-    flex: 1,
-
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-     marginLeft: 15,
-     marginRight: 15,
-     mapStyle: {
-     width: 400,
-     height: 500,
-  },
-});

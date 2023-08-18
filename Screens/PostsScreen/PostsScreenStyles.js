@@ -118,12 +118,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#FF6C00", 
    },
-  iconPlus: {
-     position: "absolute",
-     left: 10,
-     top:-5,
-     color: "white",
-    }
 });
 
 

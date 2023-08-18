@@ -10,7 +10,6 @@ import { useState} from "react";
 import { useSelector , useDispatch} from "react-redux";
 import * as ImagePicker from 'expo-image-picker';
 import { logOutUser } from '../../redux/user/logOutUser';
-import SvgUri from "react-native-svg-uri";
 import { updateAvatarUser } from "../../redux/user/updateAvatarUser";
 import { deletePost } from "../../redux/posts/deletePost";
 import styles from "./ProfileScreenStyles";
@@ -104,10 +103,10 @@ export default function ProfileScreen({ navigation }) {
         <TouchableOpacity
         onPress={onLogOut}
         style={styles.iconLogOut}>
-                    <SvgUri
+                    <Image
                     width="24"
                     height="24"
-                    source={require('../../assets/icons/log-out.svg')}/>
+                    source={require('../../images/log-out.png')}/>
         </TouchableOpacity>            
         </View>
 
@@ -129,10 +128,10 @@ export default function ProfileScreen({ navigation }) {
             <TouchableOpacity onPress={() => onNavigateOnComments(post.id)} style={styles.commentsBox}> 
                         
             {post.comments === 0
-            ? <SvgUri
+            ? <Image
              width="24"
              height="24"
-             source={require("../../assets/icons/no-commetns-icon.svg")}  
+             source={require("../../images/no-comments.png")}  
             /> 
             : <Image source={require("../../images/comment-img.png")}/>
             }         
@@ -145,11 +144,11 @@ export default function ProfileScreen({ navigation }) {
        
                 
             <TouchableOpacity  onPress={() => onNavigateOnMapScreen(post.id)} style={styles.countryBox}>        
-            <SvgUri
+            <Image
             style={styles.postIcons}            
             width="24"
             height="24"
-            source={require("../../assets/icons/map-icon.svg")} /> 
+            source={require("../../images/map.png")} /> 
             <Text>{post.name}</Text>
             </TouchableOpacity> 
 
@@ -164,28 +163,28 @@ export default function ProfileScreen({ navigation }) {
             
             <View style={styles.navMenu}>     
             <TouchableOpacity onPress={onNavigatePostsScreen}>
-            <SvgUri 
+            <Image 
              width="24"
              height="24"
-             source={require('../../assets/icons/menu-icon.svg')}/>
+             source={require('../../images/menu.png')}/>
             </TouchableOpacity>
         
             <TouchableOpacity onPress={onNavigateCreatePostsScreen}>
             <View style={styles.mainBtn}>        
-            <SvgUri
+            <Image
             style={styles.iconUser}  
             width="24"
             height="24" 
-            source={require('../../assets/icons/user-icon.svg')} />
+            source={require('../../images/user-main-btn.png')} />
             </View>  
             </TouchableOpacity>
             
 
             <TouchableOpacity onPress={onNavigateProfileScreen}>
-            <SvgUri 
+            <Image 
              width="40"
              height="40"
-            source={require('../../assets/icons/plus-icon.svg')} />  
+            source={require('../../images/plus.png')} />  
             </TouchableOpacity>                    
       </View>     
        </>     

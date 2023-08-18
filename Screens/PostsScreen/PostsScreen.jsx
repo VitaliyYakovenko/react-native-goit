@@ -5,7 +5,6 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
 import { fetchPosts } from "../../redux/posts/fetchPosts";
 import { logOutUser } from "../../redux/user/logOutUser";
-import SvgUri from "react-native-svg-uri";
 import styles from "./PostsScreenStyles";
 
 
@@ -66,10 +65,10 @@ export default function PostsScreen({ navigation }) {
       </Text>
     
       <TouchableOpacity onPress={onLogOut} style={styles.icon}>
-      <SvgUri 
+      <Image 
         width="24"
         height="24"
-        source={require('../../assets/icons/log-out.svg')}
+        source={require('../../images/log-out.png')}
       />
       </TouchableOpacity>
 
@@ -97,10 +96,10 @@ export default function PostsScreen({ navigation }) {
 
           <TouchableOpacity onPress={() => onNavigatOnComments(post.id)} style={styles.postCommentsBar}>
             {post.comments === 0
-            ? <SvgUri
+            ? <Image
              width="24"
              height="24"
-             source={require("../../assets/icons/no-commetns-icon.svg")}  
+             source={require("../../images/no-comments.png")}  
             /> 
             : <Image source={require("../../images/comment-img.png")}/>
             }   
@@ -109,10 +108,10 @@ export default function PostsScreen({ navigation }) {
           </TouchableOpacity>
          
           <TouchableOpacity onPress={() => onNavigatOnMap(post.id)} style={styles.postLocationBar}> 
-            <SvgUri
+            <Image
              width="24"
              height="24"
-             source={require("../../assets/icons/map-icon.svg")}
+             source={require("../../images/map.png")}
             />
             <Text>{post.location}</Text>
           </TouchableOpacity>    
@@ -126,27 +125,27 @@ export default function PostsScreen({ navigation }) {
       
      <View style={styles.navMenu}>
             <TouchableOpacity onPress={onNavigatePostsScreen}>
-            <SvgUri 
+            <Image 
              width="24"
              height="24"
-             source={require('../../assets/icons/menu-icon.svg')}/>
+             source={require('../../images/menu.png')}/>
             </TouchableOpacity>
         
            <TouchableOpacity onPress={onNavigateCreatePostsScreen}>
             <View style={styles.mainBtn}>        
-            <SvgUri
-            style={styles.iconPlus}  
+            <Image
+           
             width="50"
             height="50" 
-            source={require("../../assets/icons/plus-icon.svg")} />
+            source={require("../../images/center-btn.png")} />
             </View>  
             </TouchableOpacity>
 
             <TouchableOpacity onPress={onNavigateProfileScreen}>
-            <SvgUri 
+            <Image 
              width="24"
              height="24"
-            source={require('../../assets/icons/user-icon.svg')} />  
+            source={require('../../images/user.png')} />  
         </TouchableOpacity>
       </View>  
     </>

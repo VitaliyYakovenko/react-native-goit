@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
-import SvgUri from "react-native-svg-uri";
 import { createPost } from "../../redux/posts/createPost";
 import { useDispatch } from "react-redux";
 import styles from "./CreatePostsScreenStyles";
@@ -109,10 +108,10 @@ export default function CreatePostsScreen({ navigation }) {
          </View> 
 
          <TouchableOpacity onPress={onGoBack}>       
-           <SvgUri
+           <Image
            width="24" height="24"
            style={styles.icon}            
-           source={require("../../assets/icons/arrow-left.svg")}/>
+           source={require("../../images/arrow-left.png")}/>
         </TouchableOpacity>
                 
          
@@ -129,9 +128,9 @@ export default function CreatePostsScreen({ navigation }) {
         <TouchableOpacity
         onPress={takePhoto}
         style={styles.ellipseIcon}>         
-        <SvgUri
+        <Image
         width="60" height="60"          
-        source={require("../../assets/icons/ellipse.svg")}        
+        source={require("../../images/ellipse.png")}        
         /> 
            
         <Image
@@ -161,9 +160,9 @@ export default function CreatePostsScreen({ navigation }) {
      
 
         <View style={styles.addressBlock}>
-        <SvgUri style={styles.iconLocation}
+        <Image style={styles.iconLocation}
         width="24" height="24"
-        source={require("../../assets/icons/map-icon.svg")} />
+        source={require("../../images/map.png")} />
         <TextInput
             placeholder="Назва..."
             placeholderTextColor="#BDBDBD"

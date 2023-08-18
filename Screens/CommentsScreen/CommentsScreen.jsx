@@ -8,7 +8,6 @@ import {
     TextInput
 } from "react-native";
 import { useDispatch,useSelector } from "react-redux";
-import SvgUri from "react-native-svg-uri";
 import { getPostById } from "../../redux/posts/getPostById";
 import { createComment } from "../../redux/posts/createComment";
 import { getAllCommentsById } from "../../redux/posts/getAllCommentsById";
@@ -52,8 +51,8 @@ export default function CommentsScreen({ navigation, route }) {
         <ScrollView>
         <View style={styles.navBar}>
             <TouchableOpacity style={styles.iconGoBack}  onPress={onGoBack}>
-            <SvgUri width="24" height="24"      
-                source={require("../../assets/icons/arrow-left.svg")} />
+            <Image width="24" height="24"      
+                source={require("../../images/arr")} />
             </TouchableOpacity>      
             <Text style={[{ fontFamily: "Roboto-Bold" }, styles.title]}>Коментарі</Text>
         </View>

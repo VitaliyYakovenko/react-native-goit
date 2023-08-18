@@ -172,9 +172,8 @@ export default function LoginScreen({ navigation }) {
         onPress={() => navigation.navigate("Registration")}
         style={[{ fontFamily: "Roboto-Medium" }, styles.textRegister]}
         > Зареєструватися</Text>
-        </Text>
-
-
+            </Text>
+            
         </View>
         </ImageBackground>       
         </>

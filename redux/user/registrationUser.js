@@ -23,7 +23,7 @@ export const registerUser = createAsyncThunk(
       await setDoc(userDocRef, userDocData);      
       return userData;
     } catch (error) {
-      console.log(error);
+  
       thunkAPI.rejectWithValue(error.message);
       throw error;
     }

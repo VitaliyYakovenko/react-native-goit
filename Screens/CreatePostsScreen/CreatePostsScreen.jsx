@@ -33,7 +33,17 @@ export default function CreatePostsScreen({ navigation }) {
       setDisabled(true);
     }
   }, [photo, name, location]);
+ 
+   const startCamera = async () => {
+    const { status } = await Camera.requestPermissionsAsync();
+    if (status === "granted") {
+      setIsCameraRunning(true);
+    }
+  };
 
+  useEffect(() => {
+    startCamera();
+  }, []);
 
 
   const takePhoto = async () => {
@@ -48,21 +58,20 @@ export default function CreatePostsScreen({ navigation }) {
       return;
     }
 
-    let locationData = await Location.getCurrentPositionAsync({});
-    setCoords({
-      latitude: locationData.coords.latitude,
-      longitude: locationData.coords.longitude,
-    });
    
 
+    let locationData = await Location.getCurrentPositionAsync();
+    const { coords } = locationData;
+      
+    setCoords({
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+    });
     
   } catch (error) {
     console.error("Error fetching location:", error);
-  }
-
-   
-  };   
-
+  }};   
+  
 
   const onGoBack = () => {  
         navigation.navigate("PostsScreen"); 

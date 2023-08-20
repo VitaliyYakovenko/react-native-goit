@@ -9,6 +9,7 @@ export const registerUser = createAsyncThunk(
   "registration/registerUser",
   async (userData, thunkAPI) => {
     try {
+      
       const data = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
       const { login, avatar } = userData;
       updateProfile(data.user, { displayName: login });
@@ -18,10 +19,11 @@ export const registerUser = createAsyncThunk(
       const userDocData = {
         avatarPath: avatar,
       };
-
+        
       await setDoc(userDocRef, userDocData);      
       return userData;
     } catch (error) {
+      console.log(error);
       thunkAPI.rejectWithValue(error.message);
       throw error;
     }

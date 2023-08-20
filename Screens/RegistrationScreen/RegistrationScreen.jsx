@@ -79,7 +79,7 @@ export default function RegistrationScreen({navigation}) {
     });
   
     if (!result.canceled) {
-        setAvatar(result.assets[0].uri)
+      setAvatar(result.assets[0].uri);
     }
   };
  

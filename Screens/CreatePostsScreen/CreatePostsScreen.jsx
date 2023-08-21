@@ -50,54 +50,63 @@ export default function CreatePostsScreen({ navigation }) {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
     
-
     try {
+
     let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.log("Permission to access location was denied");
-      return;
-    }
-
-   
-
-    let locationData = await Location.getCurrentPositionAsync();
-    const { coords } = locationData;
-      
-    setCoords({
-      latitude: coords.latitude,
-      longitude: coords.longitude,
-    });
     
-  } catch (error) {
+
+    if (status === "granted") {
+        let locationData = await Location.getCurrentPositionAsync();
+        const { coords } = locationData;
+      
+        setCoords({
+       latitude: coords.latitude,
+       longitude: coords.longitude,
+        });
+      
+    } else {
+      console.error("Permission to access location was denied");
+    }    
+  }
+    catch (error) {
     console.error("Error fetching location:", error);
   }};   
   
 
-  const onGoBack = () => {  
-        navigation.navigate("PostsScreen"); 
-  };
 
-  const onEditPhoto = () => {
-    setPhoto("");
-  };
+
+
 
   const onPublickPost = () => {
     setPhoto("");
     setLocation("");
     setName("");
-    
+    console.log("onPublickPost");
     const data = {
-      photo: photo,
-      name: name,
-      location: location,
-      coords: coords,
-    }
-    dispatch(createPost(data));
-    
+         photo: photo,
+         name: name,
+         location: location,
+         coords: coords,
+      };
+
+      dispatch(createPost(data));
+
     navigation.navigate("PostsScreen", {
       photo: photo,
-    }); 
+     });
   };
+ 
+
+ 
+
+  const onGoBack = () => {  
+        navigation.navigate("PostsScreen"); 
+   };
+
+  const onEditPhoto = () => {
+    setPhoto("");
+   };
+
 
 
   const onDeletePost = () => {

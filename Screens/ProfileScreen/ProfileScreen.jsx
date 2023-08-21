@@ -19,6 +19,7 @@ import styles from "./ProfileScreenStyles";
 
 export default function ProfileScreen({ navigation }) {
     const [newAvatar, setNewAvatar] = useState("");
+    const [deletedPosts, setDeletedPosts] = useState([]);
     const { displayName, avatar, posts } = useSelector((state) => ({
     displayName: state.auth.displayName,
     avatar: state.auth.avatar,
@@ -76,6 +77,7 @@ export default function ProfileScreen({ navigation }) {
   
     const onDeletePost = (id) => {
         dispatch(deletePost(id));
+        setDeletedPosts((prevDeletedPosts) => [...prevDeletedPosts, id]);
     };
      
     return (
@@ -83,7 +85,7 @@ export default function ProfileScreen({ navigation }) {
     <ScrollView onScroll={onHandleScroll} style={styles.scrollViewContent}>
         <ImageBackground
             style={styles.backgroundImage}
-            source={require("../../images/photo-bg.png")}>
+            source={require("../../images/photo-bg.png")}/>
         
     <View style={styles.whiteBgBox}>
   
@@ -113,52 +115,47 @@ export default function ProfileScreen({ navigation }) {
 
         <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.userName]]}>{displayName}</Text>
     
-       <ScrollView styles={styles.scrollViewContent}>
-        {posts.map((post) => (    
-            <View style={styles.postContent} key={post.id}>
-            <TouchableOpacity onPress={() =>onDeletePost(post.id)} style={styles.removePostIcon}>
-                 <Image  source={require("../../images/add.png")} />
+        <ScrollView styles={styles.scrollViewContent}>
+
+         {posts.map((post) => {
+         if (deletedPosts.includes(post.id)) {
+          return null;
+         }
+
+        return (
+        <View style={styles.postContent} key={post.id}>
+            <TouchableOpacity onPress={() => onDeletePost(post.id)} style={styles.removePostIcon}>
+                <Image source={require("../../images/add.png")} />
             </TouchableOpacity>   
 
-            <Image style={styles.imgPost} source={{uri: post.photo}} />
-            <Text style={[[{ fontFamily: "Roboto-Bold" }, styles.locationPost]]}>{post.location}</Text>
+            <Image style={styles.imgPost} source={{ uri: post.photo }} />
+            <Text style={[{ fontFamily: "Roboto-Bold" }, styles.locationPost]}>{post.location}</Text>
 
             <View style={styles.infomationPostBox}>
+                <TouchableOpacity onPress={() => onNavigateOnComments(post.id)} style={styles.commentsBox}>
+                    {post.comments === 0 ? (
+                        <Image width={24} height={24} source={require("../../images/no-comments.png")} />
+                    ) : (
+                        <Image source={require("../../images/comment-img.png")} />
+                    )}
+                    <Text>{post.comments}</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => onNavigateOnComments(post.id)} style={styles.commentsBox}> 
-                        
-            {post.comments === 0
-            ? <Image
-             width="24"
-             height="24"
-             source={require("../../images/no-comments.png")}  
-            /> 
-            : <Image source={require("../../images/comment-img.png")}/>
-            }         
-            
-            <Text>{post.comments}</Text>
-            </TouchableOpacity> 
-                
-            <Image style={styles.postIcons} source={require("../../images/like-img.png")}/> 
-            <Text>0</Text>       
-       
-                
-            <TouchableOpacity  onPress={() => onNavigateOnMapScreen(post.id)} style={styles.countryBox}>        
-            <Image
-            style={styles.postIcons}            
-            width="24"
-            height="24"
-            source={require("../../images/map.png")} /> 
-            <Text>{post.name}</Text>
-            </TouchableOpacity> 
+                <Image style={styles.postIcons} source={require("../../images/like-img.png")} /> 
+                <Text>0</Text>       
 
-            </View>                 
-          </View>
-        ))}
-                    
+                <TouchableOpacity onPress={() => onNavigateOnMapScreen(post.id)} style={styles.countryBox}>
+                    <Image style={styles.postIcons} width={24} height={24} source={require("../../images/map.png")} /> 
+                    <Text>{post.name}</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+          );
+           })}
+
         </ScrollView>       
         </View>
-    </ImageBackground>        
+    
         </ScrollView>  
             
             <View style={styles.navMenu}>     

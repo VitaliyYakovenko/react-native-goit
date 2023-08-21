@@ -45,8 +45,7 @@ const postsSlice = createSlice({
             state.comments = action.payload;   
         })
         .addCase(deletePost.fulfilled, (state, action) => {
-            const index = state.posts.findIndex(post => post.id === action.payload.id);
-            state.posts.splice(index, 1);
+           state.posts = state.posts.filter(post => post.id !== action.payload.id);
         })
     },
  

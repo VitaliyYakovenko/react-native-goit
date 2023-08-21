@@ -19,7 +19,12 @@
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.vetaly.AwesomeProject"
+      "package": "com.vetaly.AwesomeProject",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCg7RjU99AzS-BrJMrxQ8tezsI_WTtzwbQ"
+        }
+      }
     },
     "web": {
       // "favicon": "./assets/favicon.png"

@@ -7,12 +7,11 @@ import styles from "./MapScreenStyles";
 
 export default function MapScreen({ navigation, route }) {
     const post = useSelector((state) => state.posts.post) || {};
-    const latitude = post?.coords?.latitude;
-    const longitude = post?.coords?.longitude;
+    const latitude = post?.coords?.latitude || 0;
+    const longitude = post?.coords?.longitude || 0;
     const dispatch = useDispatch();
     const { id } = route.params || {};
 
-    console.log("latitude : " ,latitude,"longitude : ",longitude)
   
    useEffect(() => { 
     dispatch(getPostById(id));
@@ -41,9 +40,9 @@ export default function MapScreen({ navigation, route }) {
    }, [latitude, longitude]);
 
     
-    const onRegionChange = (region) => {
-      console.log("New map region:", region);
-  };
+  const onRegionChange = (region) => {
+      setMapRegion(region);
+   };
     
     
     return (
@@ -63,9 +62,9 @@ export default function MapScreen({ navigation, route }) {
         onRegionChangeComplete={onRegionChange}
       >
         <Marker
-          title="I am here"
-          coordinate={{ latitude:latitude || 0, longitude: longitude  || 0}}
-          description='Hello'
+          title="I am here."
+          coordinate={{ latitude:latitude, longitude: longitude}}
+          description="Your photo was taken here."
         />
       </MapView> 
     </View>

@@ -1,17 +1,16 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-
     scrollViewContent: {
         flexGrow: 1,
         backgroundColor: "white",
     },
-
     backgroundImage: {
        paddingTop: 200,
        flex: 1,
        resizeMode: "stretch",
-       justifyContent: "flex-end",
+       justifyContent: "flex-start",
+       position: "relative",
     },
     whiteBgBox: {
         position: "relative",

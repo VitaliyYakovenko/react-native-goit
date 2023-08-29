@@ -27,9 +27,10 @@ const styles = StyleSheet.create({
         position: "absolute",
         fontWeight: 600,
         color: "red",
-        top: 66,
+        top: 72,
         zIndex: 2,
-        right: 26,
+        right: 16,
+        textAlign: "center"
     },
     input: {
         marginLeft: "auto",

@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
     },
     backgroundImage: {
-       paddingTop: 200,
-       flex: 1,
-       resizeMode: "stretch",
-       justifyContent: "flex-start",
-       position: "relative",
+        paddingTop: 200,    
+        flex: 1,
+        resizeMode: "stretch",
+        justifyContent: "flex-start",
+        position: "relative",
     },
     whiteBgBox: {
         position: "relative",

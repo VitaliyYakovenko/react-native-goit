@@ -21,24 +21,18 @@ export default function LoginScreen({ navigation }) {
   const [isFocusedEmail, setIsFocusedEmail] = useState(false);
   const [isFocusedPassword, setIsFocusedPassword] = useState(false);
   const dispatch = useDispatch();
-  const {isLogIn, isRefreshing} = useSelector(state => state.auth);
-  const [validateInput, setValidateInput] = useState(false);
-
+  const {isLogIn, isRefreshing ,loginError} = useSelector(state => state.auth);
 
   useEffect(() => {
-    
     dispatch(refreshUser());
 
     if (isRefreshing) {
-    
       navigation.navigate("PostsScreen");
       reset();
     }
   }, [isLogIn, navigation]);
 
   
-
-
 
    const handleFocusEmail = () => {
      setIsFocusedEmail(true);
@@ -61,13 +55,7 @@ export default function LoginScreen({ navigation }) {
     };
     
    const getData = async() => {
-     
-     if (email === "" || password === "" ) {
-        setValidateInput(true);
-        return;
-     }
-   
-  
+    
     await dispatch(logInUser({ email: email, password: password }));
      
     if (!isLogIn) return;
@@ -79,11 +67,11 @@ export default function LoginScreen({ navigation }) {
     const reset = () => {
         setEmail("");
         setPassword("");
-        setValidateInput(false);
     }  
-
+ 
   
-    useEffect(() => {
+  useEffect(() => {
+  
     if (isLogIn) {
       navigation.navigate("PostsScreen");
       reset();
@@ -107,13 +95,19 @@ export default function LoginScreen({ navigation }) {
         Увійти
         </Text>      
         
-      {validateInput && 
-          <Text
-          style ={[[{fontFamily: "Roboto-Bold"}, styles.validateText]]}
-          >Не вірно введено пароль або електронна пошта, або не вистачає даних</Text>
-      }      
+      
+      {loginError === "error" && (       
+            <Text
+              style={[
+                { fontFamily: "Roboto-Bold" },
+                styles.validateText,
+              ]}
+            >
+              Не вірний пароль або електронна пошта
+            </Text>
+      )}      
 
-        <TextInput        
+      <TextInput        
         placeholder="Адреса електронної пошти"
         placeholderTextColor="#BDBDBD"
         fontSize={16} 
